@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.project.helpmeat.navigator.AppNavigator
+import com.project.helpmeat.viewmodel.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,6 +24,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
 
     @Inject
     lateinit var mNavigator: AppNavigator
+
+    protected val mAppViewModel: AppViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
