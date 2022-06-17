@@ -2,18 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_intro"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/teal_200">
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/fragment_intro_animation_view"
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/intro_bg"
+        android:tint="@color/black_70"
+        android:tintMode="src_over" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/fragment_intro_animation_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:src="@drawable/intro"-->
-<!--        android:scaleType="centerCrop" />-->
+    <include layout="@layout/fragment_intro_first" />
+
+    <include layout="@layout/fragment_intro_second" />
 </FrameLayout>

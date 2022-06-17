@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_intro_second"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fragment_intro_image_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_intro_main_text_view1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help "
+            android:textColor="@color/pink"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_intro_main_text_view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meat"
+            android:textColor="@color/white"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_intro_image_view"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/intro_image_after" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_intro_image_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_intro_sub_text_view1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고기를 "
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_intro_sub_text_view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="살려주세요"
+            android:textColor="@color/pink"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

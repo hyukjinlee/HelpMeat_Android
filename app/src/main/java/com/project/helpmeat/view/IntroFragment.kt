@@ -1,12 +1,13 @@
 package com.project.helpmeat.view
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import com.project.helpmeat.R
 import com.project.helpmeat.navigator.AppScreens
 import com.project.helpmeat.view.base.BaseFragment
@@ -15,7 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class IntroFragment : BaseFragment() {
     companion object {
-        const val ANIMATION_DURATION = 1500L
+        const val ANIMATION_DELAY = 1000L
+        const val ANIMATION_DURATION = 2000L
+
+        const val ALPHA_SHOW = 1.0F
+        const val ALPHA_HIDE = 0.0F
     }
 
     override fun onCreateView(
@@ -27,25 +32,35 @@ class IntroFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val animationView = view.findViewById<FrameLayout>(R.id.fragment_intro_animation_view)
-        val alphaAnimation = AlphaAnimation(1.0f, 0.0f).apply {
-            startOffset = 0
+        val introFirst = view.findViewById<RelativeLayout>(R.id.fragment_intro_first)
+        val introSecond = view.findViewById<RelativeLayout>(R.id.fragment_intro_second)
+        val animatorSet = AnimatorSet().apply {
             duration = ANIMATION_DURATION
-            setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation?) {
-                    animationView.visibility = View.VISIBLE
+            startDelay = ANIMATION_DELAY
+            playTogether(
+                ObjectAnimator.ofFloat(introFirst, "alpha", ALPHA_SHOW, ALPHA_HIDE),
+                ObjectAnimator.ofFloat(introSecond, "alpha", ALPHA_HIDE, ALPHA_SHOW)
+            )
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(p0: Animator?) {
+                    // Do nothing
                 }
 
-                override fun onAnimationEnd(animation: Animation?) {
-                    animationView.visibility = View.GONE
-                    mNavigator.navigateTo(AppScreens.MAIN)
+                override fun onAnimationEnd(p0: Animator?) {
+                    view.postDelayed({
+                        mNavigator.navigateTo(AppScreens.MAIN)
+                    }, ANIMATION_DELAY)
                 }
 
-                override fun onAnimationRepeat(animation: Animation?) {
+                override fun onAnimationCancel(p0: Animator?) {
+                    // Do nothing
+                }
+
+                override fun onAnimationRepeat(p0: Animator?) {
                     // Do nothing
                 }
             })
         }
-        animationView.startAnimation(alphaAnimation)
+        animatorSet.start()
     }
 }
