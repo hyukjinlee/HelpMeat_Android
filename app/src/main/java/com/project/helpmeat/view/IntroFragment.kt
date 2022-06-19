@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.project.helpmeat.R
+import com.project.helpmeat.navigator.Anim
 import com.project.helpmeat.navigator.AppScreens
 import com.project.helpmeat.view.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +49,7 @@ class IntroFragment : BaseFragment() {
 
                 override fun onAnimationEnd(p0: Animator?) {
                     view.postDelayed({
-                        mNavigator.navigateTo(AppScreens.MAIN)
+                        mNavigator.navigateTo(AppScreens.INIT, Anim.SLIDE)
                     }, ANIMATION_DELAY)
                 }
 

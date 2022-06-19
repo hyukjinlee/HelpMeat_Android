@@ -9,5 +9,7 @@
     <color name="black_70">#B3000000</color>
     <color name="grey">#FF808080</color>
     <color name="pink">#FFFFC0CB</color>
+    <color name="heavy_pink">#FFF26B8A</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
 </resources>
