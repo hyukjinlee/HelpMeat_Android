@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_toolbar_icon_size">28dp</dimen>
+    <dimen name="app_toolbar_text_margin_start">20dp</dimen>
+    <dimen name="app_toolbar_text_size">36dp</dimen>
+</resources>

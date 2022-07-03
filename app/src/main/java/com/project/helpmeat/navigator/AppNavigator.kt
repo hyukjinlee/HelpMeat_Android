@@ -14,4 +14,6 @@ enum class Anim {
 interface AppNavigator {
     // Navigate to a given screen.
     fun navigateTo(screen: AppScreens, anim: Anim)
+
+    fun back()
 }

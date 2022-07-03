@@ -32,4 +32,30 @@ class AppNavigatorImpl @Inject constructor(private val mActivity: FragmentActivi
 //          .addToBackStack(fragment::class.java.canonicalName)
         }
     }
+
+    override fun back() {
+
+        if (!mActivity.supportFragmentManager.isDestroyed) {
+            val count = mActivity.supportFragmentManager.backStackEntryCount
+            if (count > 0) {
+                val currentFragment = mActivity.supportFragmentManager.fragments[count - 1]
+                mActivity.supportFragmentManager.beginTransaction().remove(currentFragment)
+            } else {
+                mActivity.finish()
+            }
+
+//            when (anim) {
+//                Anim.FADE -> transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+//                Anim.SLIDE -> transaction.setCustomAnimations(
+//                    R.anim.enter_from_right,
+//                    R.anim.exit_to_left,
+//                    R.anim.enter_from_left,
+//                    R.anim.exit_to_right
+//                )
+//            }
+//
+//            transaction.replace(R.id.main_container, fragment).commit()
+//          .addToBackStack(fragment::class.java.canonicalName)
+        }
+    }
 }
