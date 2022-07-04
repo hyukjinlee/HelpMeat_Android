@@ -40,7 +40,7 @@
                     android:id="@+id/fragment_init_input_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_rounded_rectangle"
+                    android:background="@drawable/bg_rounded_rectangle_5_pink"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
                     android:hint="고기 굽기 마스터"

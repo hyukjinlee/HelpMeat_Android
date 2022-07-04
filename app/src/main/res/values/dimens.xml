@@ -3,4 +3,10 @@
     <dimen name="app_toolbar_icon_size">28dp</dimen>
     <dimen name="app_toolbar_text_margin_start">20dp</dimen>
     <dimen name="app_toolbar_text_size">36dp</dimen>
+
+    <dimen name="size_free">0dp</dimen>
+
+    <dimen name="fragment_main_margin_between">10dp</dimen>
+    <dimen name="fragment_main_margin_between_half">5dp</dimen>
+    <dimen name="fragment_main_container_elevation">2dp</dimen>
 </resources>
