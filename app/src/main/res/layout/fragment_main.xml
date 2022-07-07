@@ -44,26 +44,19 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.project.helpmeat.components.NonePaddingTextView
+                        style="@style/NonePaddingTextViewTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
                         android:text="지금바로"
                         android:textColor="@color/heavy_pink"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <com.project.helpmeat.components.NonePaddingTextView
+                        style="@style/NonePaddingTextViewTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="고기"
-                        android:textColor="@color/heavy_pink"
-                        android:textSize="40dp"
-                        android:textStyle="bold" />
-
-                    <com.project.helpmeat.components.NonePaddingTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="굽기"
+                        android:text="고기\n굽기"
                         android:textColor="@color/heavy_pink"
                         android:textSize="40dp"
                         android:textStyle="bold" />
@@ -117,20 +110,18 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.project.helpmeat.components.NonePaddingTextView
+                        style="@style/NonePaddingTextViewTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="0dp"
                         android:text="지난 나의"
                         android:textColor="@color/heavy_pink"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <com.project.helpmeat.components.NonePaddingTextView
+                        style="@style/NonePaddingTextViewTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="0dp"
                         android:text="굽기 이력"
                         android:textColor="@color/heavy_pink"
                         android:textSize="30dp"
@@ -161,20 +152,18 @@
 
 
                     <com.project.helpmeat.components.NonePaddingTextView
+                        style="@style/NonePaddingTextViewTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="0dp"
                         android:text="1급 비밀"
                         android:textColor="@color/heavy_pink"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <com.project.helpmeat.components.NonePaddingTextView
+                        style="@style/NonePaddingTextViewTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="0dp"
                         android:text="업체 레시피"
                         android:textColor="@color/heavy_pink"
                         android:textSize="30dp"
@@ -207,8 +196,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="0dp"
                     android:text="광고 문의"
                     android:textColor="@color/heavy_pink"
                     android:textSize="40dp"

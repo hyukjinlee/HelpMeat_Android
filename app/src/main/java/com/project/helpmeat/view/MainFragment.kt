@@ -60,7 +60,7 @@ class MainFragment : BaseFragment() {
         val root = view.findViewById<LinearLayout>(R.id.fragment_main_content_container)
         limitContentViewArea(root, false)
 
-        setActionBarTitle("Help Meat", requireContext().getColor(R.color.heavy_pink))
+        setActionBarTitle("Help Meat")
 
         mScaleUpAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_up_small)
         mScaleUpAnimation.fillAfter = true

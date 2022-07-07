@@ -7,8 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.core.view.marginBottom
@@ -94,11 +92,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     }
 
     // If this method is overriding, super.onViewCreated method should also be called
-    fun setActionBarTitle(title: String, color: Int) {
-        mToolbar?.let {
-            it.setTitleTextColor(color)
-            it.title = title
-        }
+    fun setActionBarTitle(title: String) {
+        mToolbar?.title = title
     }
 
     open fun getMenuId(): Int = INVALID_ID
