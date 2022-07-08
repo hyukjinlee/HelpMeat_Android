@@ -1,11 +1,11 @@
 package com.project.helpmeat.view.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
@@ -40,6 +40,13 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
 
     protected val mAppViewModel: AppViewModel by viewModels()
 
+
+    private lateinit var mScaleUpAnimation: Animation
+    private lateinit var mScaleDownAnimation: Animation
+    private var mIsItemClicked = false
+
+    protected lateinit var mOnTouchListener: View.OnTouchListener
+
     companion object {
         const val INVALID_ID = -1
     }
@@ -69,6 +76,10 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
                 }
             }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
+
+        if (needTouchAnimation()) {
+            initTouchListener()
+        }
     }
 
     override fun onDestroy() {
@@ -95,6 +106,36 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     fun setActionBarTitle(title: String) {
         mToolbar?.title = title
     }
+
+    private fun initTouchListener() {
+        mScaleUpAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_up_small)
+        mScaleUpAnimation.fillAfter = true
+        mScaleDownAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_down_small)
+        mScaleDownAnimation.fillAfter = true
+
+        @SuppressLint("ClickableViewAccessibility")
+        mOnTouchListener = View.OnTouchListener { v, e ->
+            if (v != null && v.isClickable && e != null) {
+                when (e.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        if (!mIsItemClicked) {
+                            mIsItemClicked = true
+                            v.startAnimation(mScaleDownAnimation)
+                        }
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        if (mIsItemClicked) {
+                            mIsItemClicked = false
+                            v.clearAnimation()
+                        }
+                    }
+                }
+            }
+            v?.onTouchEvent(e) ?: true
+        }
+    }
+
+    open fun needTouchAnimation() = false
 
     open fun getMenuId(): Int = INVALID_ID
 

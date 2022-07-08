@@ -4,6 +4,7 @@ enum class AppScreens {
     INTRO,
     INIT,
     MAIN,
+    GRILL_SETTINGS,
 }
 
 enum class Anim {

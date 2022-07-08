@@ -24,6 +24,8 @@ class IntroFragment : BaseFragment() {
         const val ALPHA_HIDE = 0.0F
     }
 
+    private var mNeedToInit = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +35,9 @@ class IntroFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        observeDB()
         val introFirst = view.findViewById<RelativeLayout>(R.id.fragment_intro_first)
         val introSecond = view.findViewById<RelativeLayout>(R.id.fragment_intro_second)
         val animatorSet = AnimatorSet().apply {
@@ -49,7 +54,11 @@ class IntroFragment : BaseFragment() {
 
                 override fun onAnimationEnd(p0: Animator?) {
                     view.postDelayed({
-                        mNavigator.navigateTo(AppScreens.INIT, Anim.SLIDE)
+                        if (mNeedToInit) {
+                            mNavigator.navigateTo(AppScreens.INIT, Anim.SLIDE)
+                        } else {
+                            mNavigator.navigateTo(AppScreens.MAIN, Anim.SLIDE)
+                        }
                     }, ANIMATION_DELAY)
                 }
 
@@ -63,5 +72,16 @@ class IntroFragment : BaseFragment() {
             })
         }
         animatorSet.start()
+    }
+
+    private fun observeDB() {
+        mAppViewModel.mUserInfo.observe(viewLifecycleOwner) { list ->
+            list?.let {
+                if (it.isNotEmpty()) {
+                    mAppViewModel.mUserInfo.removeObservers(viewLifecycleOwner)
+                    mNeedToInit = false
+                }
+            }
+        }
     }
 }
