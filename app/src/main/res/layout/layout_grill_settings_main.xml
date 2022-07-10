@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_grill_settings_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/fragment_grill_settings_layout_margin_horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/steak_with_shadow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_grill_settings_meat_button"
+        android:layout_width="@dimen/fragment_grill_settings_button_width"
+        android:layout_height="@dimen/fragment_grill_settings_button_height"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginBottom="@dimen/fragment_grill_settings_button_margin"
+        android:background="@drawable/bg_rounded_rectangle_50_pink"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="고기"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fragment_grill_settings_button_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_grill_settings_width_button"
+        android:layout_width="@dimen/fragment_grill_settings_button_width"
+        android:layout_height="@dimen/fragment_grill_settings_button_height"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginBottom="@dimen/fragment_grill_settings_button_margin"
+        android:background="@drawable/bg_rounded_rectangle_50_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="두께"
+        android:textColor="@color/heavy_pink"
+        android:textSize="@dimen/fragment_grill_settings_button_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_grill_settings_grill_button"
+        android:layout_width="@dimen/fragment_grill_settings_button_width"
+        android:layout_height="@dimen/fragment_grill_settings_button_height"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginTop="@dimen/fragment_grill_settings_button_margin"
+        android:background="@drawable/bg_rounded_rectangle_50_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="불판"
+        android:textColor="@color/heavy_pink"
+        android:textSize="@dimen/fragment_grill_settings_button_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_grill_settings_state_button"
+        android:layout_width="@dimen/fragment_grill_settings_button_width"
+        android:layout_height="@dimen/fragment_grill_settings_button_height"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginTop="@dimen/fragment_grill_settings_button_margin"
+        android:background="@drawable/bg_rounded_rectangle_50_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="굽기"
+        android:textColor="@color/heavy_pink"
+        android:textSize="@dimen/fragment_grill_settings_button_text_size" />
+</FrameLayout>

@@ -108,7 +108,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     }
 
     private fun initTouchListener() {
-        mScaleUpAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_up_small)
+        mScaleUpAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_up_full)
         mScaleUpAnimation.fillAfter = true
         mScaleDownAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_down_small)
         mScaleDownAnimation.fillAfter = true

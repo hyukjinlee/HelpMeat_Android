@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="beef_list">
+        <item>살치살</item>
+        <item>목심살</item>
+        <item>꽃등심살</item>
+        <item>갈비살</item>
+        <item>채끝살</item>
+        <item>부채살</item>
+        <item>안심살</item>
+        <item>우둔살</item>
+        <item>토시살</item>
+        <item>안창살</item>
+        <item>치마살</item>
+        <item>보섭살</item>
+    </string-array>
+
+    <string-array name="fork_list">
+        <item>목살</item>
+        <item>갈비살</item>
+        <item>등심살</item>
+        <item>안심살</item>
+        <item>뒷다리살</item>
+        <item>앞다리살</item>
+        <item>삼겹살</item>
+        <item>항정살</item>
+        <item>갈매기살</item>
+    </string-array>
+</resources>
