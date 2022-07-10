@@ -15,11 +15,15 @@ import com.project.helpmeat.utils.ResourceUtils
 import java.util.function.Consumer
 
 class GrillSettingsLayoutController(private val mContext: Context, view: View) {
-    enum class STEP {
+    enum class Step {
         MEAT,
         WIDTH,
         GRILL,
         STATE
+    }
+    enum class MeatType {
+        FORK,
+        BEEF,
     }
 
     private val mMainLayout: FrameLayout
@@ -46,7 +50,8 @@ class GrillSettingsLayoutController(private val mContext: Context, view: View) {
     private lateinit var mOnGrillSelectedListener: Consumer<String>
     private lateinit var mOnStateSelectedListener: Consumer<String>
 
-    private lateinit var mCurrentStep: STEP
+    private lateinit var mCurrentStep: Step
+    private lateinit var mMeatType: MeatType
 
     init {
         mMainLayout = view.findViewById(R.id.fragment_grill_settings_main)
@@ -69,12 +74,14 @@ class GrillSettingsLayoutController(private val mContext: Context, view: View) {
 
         mMeatLayoutTopContainer = view.findViewById(R.id.fragment_grill_settings_meat_top_container)
         mMeatLayoutTopContainer.setOnClickListener {
+            mMeatType = MeatType.FORK
             mDetailMeatListAdapter.updateMeatList(ResourceUtils.getForkList(mContext))
             playMoveLeftAnimation(mMeatLayout, mMeatDetailLayout)
         }
 
         mMeatLayoutBottomContainer = view.findViewById(R.id.fragment_grill_settings_meat_bottom_container)
         mMeatLayoutBottomContainer.setOnClickListener {
+            mMeatType = MeatType.BEEF
             mDetailMeatListAdapter.updateMeatList(ResourceUtils.getBeefList(mContext))
             playMoveLeftAnimation(mMeatLayout, mMeatDetailLayout)
         }
@@ -88,7 +95,15 @@ class GrillSettingsLayoutController(private val mContext: Context, view: View) {
         mDetailMeatList = view.findViewById(R.id.fragment_grill_settings_meat_detail_list)
         mDetailMeatListAdapter = MeatListAdapter()
         mDetailMeatListAdapter.setOnSelectedListener { selectedText ->
-            mOnMeatSelectedListener.accept(selectedText)
+            val meatFullName = when (mMeatType) {
+                MeatType.FORK -> {
+                    "$selectedText\n(돼지)"
+                }
+                MeatType.BEEF -> {
+                    "$selectedText\n(소)"
+                }
+            }
+            mOnMeatSelectedListener.accept(meatFullName)
             hideLayout(mMeatDetailLayout)
         }
         mDetailMeatList.adapter = mDetailMeatListAdapter
@@ -127,19 +142,19 @@ class GrillSettingsLayoutController(private val mContext: Context, view: View) {
         })
     }
 
-    fun showLayout(step: STEP) {
+    fun showLayout(step: Step) {
         mCurrentStep = step
         val layout = when (step) {
-            STEP.MEAT -> {
+            Step.MEAT -> {
                 mMeatLayout
             }
-            STEP.WIDTH -> {
+            Step.WIDTH -> {
                 mMeatLayout
             }
-            STEP.GRILL -> {
+            Step.GRILL -> {
                 mMeatLayout
             }
-            STEP.STATE -> {
+            Step.STATE -> {
                 mMeatLayout
             }
         }

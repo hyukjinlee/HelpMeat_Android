@@ -10,7 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.project.helpmeat.R
 import com.project.helpmeat.controller.GrillSettingsLayoutController
-import com.project.helpmeat.controller.GrillSettingsLayoutController.STEP
+import com.project.helpmeat.controller.GrillSettingsLayoutController.Step
 import com.project.helpmeat.view.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.function.Consumer
@@ -32,7 +32,7 @@ class GrillSettingsFragment : BaseFragment() {
 
     private lateinit var mBlinkAnimation: Animation
 
-    private var mCurrentStep = STEP.MEAT
+    private var mCurrentStep = Step.MEAT
 
     private lateinit var mGrillSettingsLayoutController: GrillSettingsLayoutController
     private val mOnMeatSelectedListener: Consumer<String> = Consumer { selectedText ->
@@ -79,7 +79,7 @@ class GrillSettingsFragment : BaseFragment() {
         mMeatButton = view.findViewById(R.id.fragment_grill_settings_meat_button)
         mMeatButton.setOnTouchListener(mOnTouchListener)
         mMeatButton.setOnClickListener {
-            mGrillSettingsLayoutController.showLayout(STEP.MEAT)
+            mGrillSettingsLayoutController.showLayout(Step.MEAT)
         }
 
         mWidthButton = view.findViewById(R.id.fragment_grill_settings_width_button)
@@ -103,16 +103,16 @@ class GrillSettingsFragment : BaseFragment() {
 
     private fun runBlinkAnimation() {
         when (mCurrentStep) {
-            STEP.MEAT -> {
+            Step.MEAT -> {
                 mMeatButton.startAnimation(mBlinkAnimation)
             }
-            STEP.WIDTH -> {
+            Step.WIDTH -> {
                 mWidthButton.startAnimation(mBlinkAnimation)
             }
-            STEP.GRILL -> {
+            Step.GRILL -> {
                 mGrillButton.startAnimation(mBlinkAnimation)
             }
-            STEP.STATE -> {
+            Step.STATE -> {
                 mStateButton.startAnimation(mBlinkAnimation)
             }
         }
