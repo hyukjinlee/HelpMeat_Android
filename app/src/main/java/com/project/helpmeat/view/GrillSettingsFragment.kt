@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.project.helpmeat.R
 import com.project.helpmeat.controller.GrillSettingsLayoutController
 import com.project.helpmeat.controller.GrillSettingsLayoutController.Step
+import com.project.helpmeat.utils.ResourceUtils
 import com.project.helpmeat.view.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.function.Consumer
@@ -34,18 +35,21 @@ class GrillSettingsFragment : BaseFragment() {
 
     private var mCurrentStep = Step.MEAT
 
+    private var mSelectedMeatType = 0
+
     private lateinit var mGrillSettingsLayoutController: GrillSettingsLayoutController
-    private val mOnMeatSelectedListener: Consumer<String> = Consumer { selectedText ->
-        mMeatButton.text = selectedText
+    private val mOnMeatSelectedListener: Consumer<Int> = Consumer { selectedMeatType ->
+        mSelectedMeatType = selectedMeatType
+        mMeatButton.text = ResourceUtils.getMeatName(requireContext(), selectedMeatType)
     }
-    private val mOnWidthSelectedListener: Consumer<String> = Consumer { selectedText ->
-        mWidthButton.text = selectedText
+    private val mOnWidthSelectedListener: Consumer<Int> = Consumer { _ ->
+        mWidthButton.text = ""
     }
-    private val mOnGrillSelectedListener: Consumer<String> = Consumer { selectedText ->
-        mGrillButton.text = selectedText
+    private val mOnGrillSelectedListener: Consumer<Int> = Consumer { _ ->
+        mGrillButton.text = ""
     }
-    private val mOnStateSelectedListener: Consumer<String> = Consumer { selectedText ->
-        mStateButton.text = selectedText
+    private val mOnStateSelectedListener: Consumer<Int> = Consumer { _ ->
+        mStateButton.text = ""
     }
 
     override fun onCreateView(

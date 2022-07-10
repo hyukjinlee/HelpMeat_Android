@@ -11,15 +11,16 @@ import java.util.function.Consumer
 class MeatListAdapter() : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHolder>() {
 
     private var mMeatList: List<String> = ArrayList()
-    private lateinit var mListener: Consumer<String>
+    private lateinit var mListener: Consumer<Int>
 
     inner class MeatListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mTextView: TextView = itemView.findViewById(R.id.text_view)
 
-        fun bind(meat: String) {
+        fun bind(meat: String, meatType: Int) {
             mTextView.text = meat
+            mTextView.tag = meatType
             mTextView.setOnClickListener {
-                mListener.accept(mTextView.text.toString())
+                mListener.accept(mTextView.tag.toString().toInt())
             }
         }
     }
@@ -29,7 +30,7 @@ class MeatListAdapter() : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHo
         notifyDataSetChanged()
     }
 
-    fun setOnSelectedListener(listener: Consumer<String>) {
+    fun setOnSelectedListener(listener: Consumer<Int>) {
         mListener = listener
     }
 
@@ -40,9 +41,9 @@ class MeatListAdapter() : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHo
 
     override fun onBindViewHolder(holder: MeatListAdapterHolder, position: Int) {
         if (position == 0) {
-            holder.bind(mMeatList[position])
+            holder.bind(mMeatList[position], position)
         } else {
-            holder.bind(mMeatList[position])
+            holder.bind(mMeatList[position], position)
         }
     }
 
