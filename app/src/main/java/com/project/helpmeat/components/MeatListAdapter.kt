@@ -1,17 +1,22 @@
 package com.project.helpmeat.components
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.helpmeat.R
-import java.util.function.Consumer
+import com.project.helpmeat.constant.Constants.MeatType
+import com.project.helpmeat.controller.GrillSettingsDataController
+import com.project.helpmeat.utils.ResourceUtils
 
-class MeatListAdapter() : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHolder>() {
+class MeatListAdapter(private val mContext: Context) : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHolder>() {
 
+    private lateinit var mGrillSettingsDataController: GrillSettingsDataController
+
+    private lateinit var mMeatType: MeatType
     private var mMeatList: List<String> = ArrayList()
-    private lateinit var mListener: Consumer<Int>
 
     inner class MeatListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mTextView: TextView = itemView.findViewById(R.id.text_view)
@@ -20,23 +25,33 @@ class MeatListAdapter() : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHo
             mTextView.text = meat
             mTextView.tag = meatType
             mTextView.setOnClickListener {
-                mListener.accept(mTextView.tag.toString().toInt())
+                val meatType = mMeatType.value + mTextView.tag.toString().toInt()
+                mGrillSettingsDataController.onMeatSelected(meatType)
             }
         }
     }
 
-    fun updateMeatList(meatList: List<String>) {
-        mMeatList = meatList
+    fun setGrillSettingsDataController(controller: GrillSettingsDataController) {
+        mGrillSettingsDataController = controller
+    }
+
+    fun updateMeatType(meatType: MeatType) {
+        mMeatType = meatType
+        mMeatList = when (meatType) {
+            MeatType.MEAT_TYPE_FORK -> {
+                ResourceUtils.getForkList(mContext)
+            }
+            MeatType.MEAT_TYPE_BEEF -> {
+                ResourceUtils.getBeefList(mContext)
+            }
+        }
         notifyDataSetChanged()
     }
 
-    fun setOnSelectedListener(listener: Consumer<Int>) {
-        mListener = listener
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeatListAdapterHolder {
-        return MeatListAdapterHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_meat_list_item, parent, false))
+        return MeatListAdapterHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_meat_list_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: MeatListAdapterHolder, position: Int) {

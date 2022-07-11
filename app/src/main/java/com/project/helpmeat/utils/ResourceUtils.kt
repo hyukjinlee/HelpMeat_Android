@@ -10,14 +10,14 @@ class ResourceUtils {
         fun getBeefList(context: Context): List<String> = context.resources.getStringArray(R.array.beef_list).toList()
 
         fun getMeatName(context: Context, mt: Int): String {
-            val meatType = mt / 100 * 100
-            val index = (mt % 100)
+            val meatType = mt / Constants.MEAT_TYPE_STANDARD * Constants.MEAT_TYPE_STANDARD
+            val index = (mt % Constants.MEAT_TYPE_STANDARD)
             val meatName = when (meatType) {
-                Constants.MEAT_TYPE_FORK -> {
+                Constants.MeatType.MEAT_TYPE_FORK.value -> {
                     val forkList = getForkList(context)
                     "${forkList[index]}\n(돼지)"
                 }
-                Constants.MEAT_TYPE_BEEF -> {
+                Constants.MeatType.MEAT_TYPE_BEEF.value -> {
                     val beefList = getBeefList(context)
                     "${beefList[index]}\n(소)"
                 }
