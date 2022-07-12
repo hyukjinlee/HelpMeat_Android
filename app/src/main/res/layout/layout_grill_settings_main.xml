@@ -6,11 +6,12 @@
     android:layout_marginHorizontal="@dimen/fragment_grill_settings_layout_margin_horizontal">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_grill_settings_meat_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
-        android:src="@drawable/steak_with_shadow" />
+        android:src="@drawable/beef_with_shadow" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_grill_settings_meat_button"

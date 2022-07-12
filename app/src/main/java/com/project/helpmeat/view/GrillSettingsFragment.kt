@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.project.helpmeat.R
+import com.project.helpmeat.constant.Constants
 import com.project.helpmeat.controller.GrillSettingsDataController
 import com.project.helpmeat.controller.GrillSettingsDataObserver
 import com.project.helpmeat.controller.GrillSettingsLayoutController
@@ -27,14 +29,13 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         const val BLINK_ANIMATION_DURATION = 500L
     }
 
+    private lateinit var mMeatImage: ImageView
     private lateinit var mMeatButton: TextView
     private lateinit var mWidthButton: TextView
     private lateinit var mGrillButton: TextView
     private lateinit var mStateButton: TextView
 
     private var mCurrentStep = Step.MEAT
-
-    private var mSelectedMeatType = 0
 
     @Inject
     lateinit var mGrillSettingsDataController: GrillSettingsDataController
@@ -55,7 +56,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         limitContentViewArea(root, false)
 
         initGrillSettingsControllers(view)
-        initButtons(view)
+        initSettingMainComponents(view)
         playBlinkAnimation()
     }
 
@@ -70,7 +71,9 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         mGrillSettingsLayoutController = GrillSettingsLayoutController(requireContext(), mGrillSettingsDataController, view)
     }
 
-    private fun initButtons(view: View) {
+    private fun initSettingMainComponents(view: View) {
+        mMeatImage = view.findViewById(R.id.fragment_grill_settings_meat_image)
+
         mMeatButton = view.findViewById(R.id.fragment_grill_settings_meat_button)
         mMeatButton.setOnTouchListener(mOnTouchListener)
         mMeatButton.setOnClickListener {
@@ -114,9 +117,17 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
 
     override fun needTouchAnimation() = true
 
-    override fun onMeatSelected(meatType: Int) {
-        mSelectedMeatType = meatType
-        mMeatButton.text = ResourceUtils.getMeatName(requireContext(), meatType)
+    override fun onMeatSelected(meatValue: Int) {
+        when (Constants.getMeatType(meatValue)) {
+            Constants.MeatType.MEAT_TYPE_FORK -> {
+                mMeatImage.setImageDrawable(requireContext().getDrawable(R.drawable.fork_with_shadow))
+            }
+            Constants.MeatType.MEAT_TYPE_BEEF -> {
+                mMeatImage.setImageDrawable(requireContext().getDrawable(R.drawable.beef_with_shadow))
+            }
+            Constants.MeatType.MEAT_TYPE_ERROR -> {}
+        }
+        mMeatButton.text = ResourceUtils.getMeatName(requireContext(), meatValue)
     }
 
     override fun onWidthSelected() {

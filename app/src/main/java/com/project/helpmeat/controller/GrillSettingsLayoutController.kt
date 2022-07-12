@@ -51,7 +51,7 @@ class GrillSettingsLayoutController(
         mOKButton.setOnClickListener {
             when (mCurrentStep) {
                 Step.MEAT -> {
-                    mGrillSettingsDataController.notifyMeatObservers()
+                    mGrillSettingsDataController.notifyMeatCompleted()
                     hideLayout(mMeatDetailLayout)
                 }
                 Step.WIDTH -> {

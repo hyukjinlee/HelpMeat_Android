@@ -61,7 +61,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/steak" />
+            android:src="@drawable/beef" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

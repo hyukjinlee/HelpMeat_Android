@@ -39,7 +39,7 @@
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/steak_with_shadow" />
+        android:src="@drawable/beef_with_shadow" />
 
     <LinearLayout
         android:layout_width="wrap_content"

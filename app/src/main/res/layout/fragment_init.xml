@@ -73,7 +73,7 @@
             android:layout_height="200dp"
             android:layout_centerInParent="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/steak_with_shadow" />
+            android:src="@drawable/beef_with_shadow" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/fragment_init_button"

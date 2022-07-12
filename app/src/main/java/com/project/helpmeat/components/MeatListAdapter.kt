@@ -34,8 +34,8 @@ class MeatListAdapter(private val mContext: Context, private val mGrillSettingsD
                 mBeforeSelectedItem?.unselect()
                 select()
 
-                val meatType = mMeatType.value + mTextView.tag.toString().toInt()
-                mGrillSettingsDataController.onMeatSelected(meatType)
+                val meatValue = mMeatType.value + mTextView.tag.toString().toInt()
+                mGrillSettingsDataController.onMeatSelected(meatValue)
             }
         }
 
@@ -65,6 +65,9 @@ class MeatListAdapter(private val mContext: Context, private val mGrillSettingsD
             }
             MeatType.MEAT_TYPE_BEEF -> {
                 ResourceUtils.getBeefList(mContext)
+            }
+            MeatType.MEAT_TYPE_ERROR -> {
+                ArrayList()
             }
         }
         notifyDataSetChanged()
