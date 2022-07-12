@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_meat_list_item_height">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/check_mark"
+        android:layout_width="@dimen/layout_meat_list_item_height"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/layout_meat_list_item_margin_start"
+        android:scaleType="fitCenter"
+        android:src="@drawable/fire"
+        android:visibility="invisible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:textColor="@color/heavy_pink"
         android:textSize="@dimen/layout_meat_list_item_text_size" />
-</FrameLayout>
+</RelativeLayout>

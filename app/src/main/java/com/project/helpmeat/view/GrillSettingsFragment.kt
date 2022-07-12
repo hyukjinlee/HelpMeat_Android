@@ -67,7 +67,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
 
     private fun initGrillSettingsControllers(view: View) {
         mGrillSettingsDataController.addObserver(this)
-        mGrillSettingsLayoutController = GrillSettingsLayoutController(requireContext(), mGrillSettingsDataController,view)
+        mGrillSettingsLayoutController = GrillSettingsLayoutController(requireContext(), mGrillSettingsDataController, view)
     }
 
     private fun initButtons(view: View) {

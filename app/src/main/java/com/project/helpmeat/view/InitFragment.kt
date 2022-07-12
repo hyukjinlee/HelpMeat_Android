@@ -40,7 +40,7 @@ class InitFragment : BaseFragment() {
                 startButton.setImageDrawable(AppCompatResources.getDrawable(view.context, R.drawable.black_fire))
             } else {
                 startButton.isClickable = true
-                startButton.setImageDrawable(AppCompatResources.getDrawable(view.context, R.drawable.fire_with_message))
+                startButton.setImageDrawable(AppCompatResources.getDrawable(view.context, R.drawable.fire_with_message_init))
             }
         }
 

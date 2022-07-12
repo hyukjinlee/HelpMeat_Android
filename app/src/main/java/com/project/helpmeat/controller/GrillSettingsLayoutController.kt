@@ -2,7 +2,7 @@ package com.project.helpmeat.controller
 
 import android.content.Context
 import android.view.View
-import android.widget.FrameLayout
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@ class GrillSettingsLayoutController(
     private val mContext: Context,
     private var mGrillSettingsDataController: GrillSettingsDataController,
     view: View,
-) : GrillSettingsDataObserver {
+) {
     companion object {
         const val TAG = "GrillSettingsLayoutController"
     }
@@ -28,7 +28,7 @@ class GrillSettingsLayoutController(
         STATE
     }
 
-    private val mMainLayout: FrameLayout
+    private lateinit var mOKButton: Button
     private lateinit var mMeatLayout: ConstraintLayout
 
     private lateinit var mMeatLayoutTopContainer: LinearLayout // Fork
@@ -42,10 +42,29 @@ class GrillSettingsLayoutController(
     private lateinit var mCurrentStep: Step
 
     init {
-        mMainLayout = view.findViewById(R.id.fragment_grill_settings_main)
-        mGrillSettingsDataController.addObserver(this)
-
+        initOKButton(view)
         initMeatLayout(view)
+    }
+
+    private fun initOKButton(view: View) {
+        mOKButton = view.findViewById(R.id.fragment_grill_settings_ok_button)
+        mOKButton.setOnClickListener {
+            when (mCurrentStep) {
+                Step.MEAT -> {
+                    mGrillSettingsDataController.notifyMeatObservers()
+                    hideLayout(mMeatDetailLayout)
+                }
+                Step.WIDTH -> {
+
+                }
+                Step.GRILL -> {
+
+                }
+                Step.STATE -> {
+
+                }
+            }
+        }
     }
 
     private fun initMeatLayout(view: View) {
@@ -55,23 +74,25 @@ class GrillSettingsLayoutController(
         mMeatLayoutTopContainer.setOnClickListener {
             mDetailMeatListAdapter.updateMeatType(MeatType.MEAT_TYPE_FORK)
             AnimationUtils.playMoveLeftAnimation(mContext, mMeatLayout, mMeatDetailLayout)
+            showOKButton()
         }
 
         mMeatLayoutBottomContainer = view.findViewById(R.id.fragment_grill_settings_meat_bottom_container)
         mMeatLayoutBottomContainer.setOnClickListener {
             mDetailMeatListAdapter.updateMeatType(MeatType.MEAT_TYPE_BEEF)
             AnimationUtils.playMoveLeftAnimation(mContext, mMeatLayout, mMeatDetailLayout)
+            showOKButton()
         }
 
         mMeatDetailLayout = view.findViewById(R.id.fragment_grill_settings_meat_detail)
         mMeatDetailBackButton = view.findViewById(R.id.fragment_grill_settings_meat_detail_back_button)
         mMeatDetailBackButton.setOnClickListener {
             AnimationUtils.playMoveRightAnimation(mContext, mMeatDetailLayout, mMeatLayout)
+            hideOKButton()
         }
 
         mDetailMeatList = view.findViewById(R.id.fragment_grill_settings_meat_detail_list)
-        mDetailMeatListAdapter = MeatListAdapter(mContext)
-        mDetailMeatListAdapter.setGrillSettingsDataController(mGrillSettingsDataController)
+        mDetailMeatListAdapter = MeatListAdapter(mContext, mGrillSettingsDataController)
         mDetailMeatList.adapter = mDetailMeatListAdapter
     }
 
@@ -95,21 +116,14 @@ class GrillSettingsLayoutController(
 
     private fun hideLayout(layout: View) {
         AnimationUtils.playFullScaleDownAnimation(mContext, layout)
+        hideOKButton()
     }
 
-    override fun onMeatSelected(meatType: Int) {
-        hideLayout(mMeatDetailLayout)
+    private fun showOKButton() {
+        mOKButton.visibility = View.VISIBLE
     }
 
-    override fun onWidthSelected() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGrillSelected() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onDegreeSelected() {
-        TODO("Not yet implemented")
+    private fun hideOKButton() {
+        mOKButton.visibility = View.GONE
     }
 }

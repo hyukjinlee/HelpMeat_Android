@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.helpmeat.R
@@ -11,32 +13,52 @@ import com.project.helpmeat.constant.Constants.MeatType
 import com.project.helpmeat.controller.GrillSettingsDataController
 import com.project.helpmeat.utils.ResourceUtils
 
-class MeatListAdapter(private val mContext: Context) : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHolder>() {
-
-    private lateinit var mGrillSettingsDataController: GrillSettingsDataController
+class MeatListAdapter(private val mContext: Context, private val mGrillSettingsDataController: GrillSettingsDataController)
+    : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHolder>() {
+    private var mBeforeSelectedItem: MeatListAdapterHolder? = null
 
     private lateinit var mMeatType: MeatType
     private var mMeatList: List<String> = ArrayList()
+    private var mBorderDrawable = mContext.getDrawable(R.drawable.bg_rounded_empty_rectangle_10_pink)
 
     inner class MeatListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val mRoot: RelativeLayout = itemView.findViewById(R.id.root)
+        private val mCheckMark: ImageView = itemView.findViewById(R.id.check_mark)
         private val mTextView: TextView = itemView.findViewById(R.id.text_view)
 
-        fun bind(meat: String, meatType: Int) {
+        fun bind(meat: String) {
+            unselect()
             mTextView.text = meat
-            mTextView.tag = meatType
+            mTextView.tag = adapterPosition
             mTextView.setOnClickListener {
+                mBeforeSelectedItem?.unselect()
+                select()
+
                 val meatType = mMeatType.value + mTextView.tag.toString().toInt()
                 mGrillSettingsDataController.onMeatSelected(meatType)
             }
         }
-    }
 
-    fun setGrillSettingsDataController(controller: GrillSettingsDataController) {
-        mGrillSettingsDataController = controller
+        private fun select() {
+            mRoot.background = mBorderDrawable
+            mCheckMark.visibility = View.VISIBLE
+
+            mBeforeSelectedItem = this
+        }
+
+        private fun unselect() {
+            mRoot.background = null
+            mCheckMark.visibility = View.INVISIBLE
+        }
+
+        override fun toString(): String {
+            return "${mTextView.tag} : ${mTextView.text}"
+        }
     }
 
     fun updateMeatType(meatType: MeatType) {
         mMeatType = meatType
+        mMeatList.toMutableList().clear()
         mMeatList = when (meatType) {
             MeatType.MEAT_TYPE_FORK -> {
                 ResourceUtils.getForkList(mContext)
@@ -55,11 +77,7 @@ class MeatListAdapter(private val mContext: Context) : RecyclerView.Adapter<Meat
     }
 
     override fun onBindViewHolder(holder: MeatListAdapterHolder, position: Int) {
-        if (position == 0) {
-            holder.bind(mMeatList[position], position)
-        } else {
-            holder.bind(mMeatList[position], position)
-        }
+        holder.bind(mMeatList[position])
     }
 
     override fun getItemCount(): Int = mMeatList.size

@@ -23,10 +23,9 @@ class GrillSettingsDataController {
 
     fun onMeatSelected(meatType: Int) {
         mMeatType = meatType
-        notifyMeatObservers()
     }
 
-    private fun notifyMeatObservers() {
+    fun notifyMeatObservers() {
         mObserverList.forEach { o ->
             o.onMeatSelected(mMeatType)
         }
