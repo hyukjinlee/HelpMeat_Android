@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_grill_settings_meat"
+    android:id="@+id/layout_grill_settings_meat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/fragment_grill_settings_layout_margin_horizontal"
-    android:background="@drawable/bg_rounded_rectangle_20_white"
+    android:layout_marginHorizontal="@dimen/layout_grill_settings_margin_horizontal"
+    android:background="@drawable/bg_rounded_rectangle_60_white"
     android:orientation="vertical"
     android:visibility="gone">
 
     <LinearLayout
-        android:id="@+id/fragment_grill_settings_meat_top_container"
+        android:id="@+id/layout_grill_settings_meat_top_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_free"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_meat_between_line"
+        app:layout_constraintBottom_toTopOf="@id/layout_grill_settings_meat_between_line"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="0.49">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/layout_grill_settings_meat_image_size"
+            android:layout_height="@dimen/layout_grill_settings_meat_image_size"
             android:scaleType="fitCenter"
             android:src="@drawable/fork" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/layout_grill_settings_meat_text_margin_start"
             android:text="돼지고기"
             android:textColor="@color/heavy_pink"
-            android:textSize="30dp" />
+            android:textSize="@dimen/layout_grill_settings_meat_text_size" />
     </LinearLayout>
 
     <View
-        android:id="@+id/fragment_grill_settings_meat_between_line"
+        android:id="@+id/layout_grill_settings_meat_between_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_free"
         android:background="@drawable/solid_line"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_meat_top_container"
+        android:layout_marginHorizontal="@dimen/layout_grill_settings_meat_between_line_margin_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/layout_grill_settings_meat_top_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_meat_bottom_container"
+        app:layout_constraintBottom_toTopOf="@id/layout_grill_settings_meat_bottom_container"
         app:layout_constraintVertical_weight="0.02" />
 
     <LinearLayout
-        android:id="@+id/fragment_grill_settings_meat_bottom_container"
+        android:id="@+id/layout_grill_settings_meat_bottom_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_free"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_meat_between_line"
+        app:layout_constraintTop_toBottomOf="@id/layout_grill_settings_meat_between_line"
         app:layout_constraintVertical_weight="0.49">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/layout_grill_settings_meat_image_size"
+            android:layout_height="@dimen/layout_grill_settings_meat_image_size"
             android:scaleType="fitCenter"
             android:src="@drawable/beef" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="@dimen/layout_grill_settings_meat_text_margin_start"
             android:text="소고기"
             android:textColor="@color/heavy_pink"
-            android:textSize="30dp" />
+            android:textSize="@dimen/layout_grill_settings_meat_text_size" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

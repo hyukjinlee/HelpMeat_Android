@@ -4,8 +4,8 @@
     android:id="@+id/fragment_grill_settings_meat_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/fragment_grill_settings_layout_margin_horizontal"
-    android:background="@drawable/bg_rounded_rectangle_20_white"
+    android:layout_marginHorizontal="@dimen/layout_grill_settings_margin_horizontal"
+    android:background="@drawable/bg_rounded_rectangle_60_white"
     android:orientation="vertical"
     android:visibility="gone">
 

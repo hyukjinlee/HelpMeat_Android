@@ -27,7 +27,7 @@
         <item name="titleTextAppearance">@style/TitleTextTheme</item>
     </style>
     <style name="TitleTextTheme" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">@dimen/app_toolbar_text_size</item>
         <item name="android:textColor">@color/heavy_pink</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textStyle">bold</item>
@@ -37,26 +37,26 @@
     <style name="TextViewTheme" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:lineSpacingExtra">0dp</item>
-        <item name="android:padding">5dp</item>
+        <item name="android:lineSpacingExtra">0px</item>
+        <item name="android:padding">15px</item>
     </style>
     <style name="NonePaddingTextViewTheme" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="android:lineSpacingExtra">0px</item>
     </style>
 
     <!-- EditText theme. -->
     <style name="EditTextTheme" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:padding">30px</item>
     </style>
 
     <!-- Button theme. -->
     <style name="ButtonTheme" parent="Widget.AppCompat.Button">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:padding">30px</item>
     </style>
 </resources>

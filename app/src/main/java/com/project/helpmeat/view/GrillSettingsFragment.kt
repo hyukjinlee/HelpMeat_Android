@@ -133,7 +133,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         val context = requireContext()
         button?.let {
             AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, button)
-            button.background = context.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
+            button.background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
             button.setTextColor(context.getColor(R.color.white))
         }
     }
@@ -179,7 +179,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         with (mMeatButton) {
             text = ResourceUtils.getMeatName(requireContext(), meatValue)
             clearAnimation()
-            background = context.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
+            background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
             setTextColor(context.getColor(R.color.white))
         }
         onStepCompleted()

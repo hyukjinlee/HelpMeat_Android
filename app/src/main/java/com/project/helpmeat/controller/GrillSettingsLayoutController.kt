@@ -72,16 +72,16 @@ class GrillSettingsLayoutController(
     }
 
     private fun initMeatLayout(view: View) {
-        mMeatLayout = view.findViewById(R.id.fragment_grill_settings_meat)
+        mMeatLayout = view.findViewById(R.id.layout_grill_settings_meat)
 
-        mMeatLayoutTopContainer = view.findViewById(R.id.fragment_grill_settings_meat_top_container)
+        mMeatLayoutTopContainer = view.findViewById(R.id.layout_grill_settings_meat_top_container)
         mMeatLayoutTopContainer.setOnClickListener {
             mDetailMeatListAdapter.updateMeatType(MeatType.MEAT_TYPE_FORK)
             AnimationUtils.playMoveLeftAnimation(mContext, mMeatLayout, mMeatDetailLayout)
             showOKButton()
         }
 
-        mMeatLayoutBottomContainer = view.findViewById(R.id.fragment_grill_settings_meat_bottom_container)
+        mMeatLayoutBottomContainer = view.findViewById(R.id.layout_grill_settings_meat_bottom_container)
         mMeatLayoutBottomContainer.setOnClickListener {
             mDetailMeatListAdapter.updateMeatType(MeatType.MEAT_TYPE_BEEF)
             AnimationUtils.playMoveLeftAnimation(mContext, mMeatLayout, mMeatDetailLayout)

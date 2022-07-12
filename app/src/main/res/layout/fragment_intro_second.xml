@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/fragment_intro_image_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="@dimen/fragment_intro_main_text_container_margin_bottom"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Help "
             android:textColor="@color/pink"
-            android:textSize="50dp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/fragment_intro_main_text_size" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_intro_main_text_view2"
@@ -29,14 +28,13 @@
             android:layout_height="wrap_content"
             android:text="Meat"
             android:textColor="@color/white"
-            android:textSize="50dp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/fragment_intro_main_text_size" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/fragment_intro_image_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/fragment_intro_image_size"
+        android:layout_height="@dimen/fragment_intro_image_size"
         android:layout_centerInParent="true"
         android:scaleType="fitCenter"
         android:src="@drawable/beef_with_shadow" />
@@ -46,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_intro_image_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/fragment_intro_sub_text_container_margin_top"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -56,8 +54,7 @@
             android:layout_height="wrap_content"
             android:text="고기를 "
             android:textColor="@color/white"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/fragment_intro_sub_text_size" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fragment_intro_sub_text_view2"
@@ -65,7 +62,6 @@
             android:layout_height="wrap_content"
             android:text="살려주세요"
             android:textColor="@color/pink"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/fragment_intro_sub_text_size" />
     </LinearLayout>
 </RelativeLayout>

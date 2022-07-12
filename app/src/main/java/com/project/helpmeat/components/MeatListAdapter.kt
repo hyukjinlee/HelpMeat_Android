@@ -19,7 +19,7 @@ class MeatListAdapter(private val mContext: Context, private val mGrillSettingsD
 
     private lateinit var mMeatType: MeatType
     private var mMeatList: List<String> = ArrayList()
-    private var mBorderDrawable = mContext.getDrawable(R.drawable.bg_rounded_empty_rectangle_10_pink)
+    private var mBorderDrawable = mContext.getDrawable(R.drawable.bg_rounded_empty_rectangle_30_pink)
 
     inner class MeatListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mRoot: RelativeLayout = itemView.findViewById(R.id.root)
