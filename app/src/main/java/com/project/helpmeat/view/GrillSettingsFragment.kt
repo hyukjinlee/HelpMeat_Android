@@ -29,12 +29,15 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         const val BLINK_ANIMATION_DURATION = 500L
     }
 
+    private val mTextList = ArrayList<TextView>()
+
     private lateinit var mMeatImage: ImageView
     private lateinit var mMeatButton: TextView
     private lateinit var mWidthButton: TextView
     private lateinit var mGrillButton: TextView
-    private lateinit var mStateButton: TextView
+    private lateinit var mDegreeButton: TextView
 
+    private var mPreviousStep = Step.MEAT
     private var mCurrentStep = Step.MEAT
 
     @Inject
@@ -57,7 +60,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
 
         initGrillSettingsControllers(view)
         initSettingMainComponents(view)
-        playBlinkAnimation()
+        playCurrentStep()
     }
 
     override fun onDestroyView() {
@@ -72,6 +75,10 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
     }
 
     private fun initSettingMainComponents(view: View) {
+        mTextList.add(view.findViewById(R.id.fragment_grill_settings_text_first))
+        mTextList.add(view.findViewById(R.id.fragment_grill_settings_text_second))
+        mTextList.add(view.findViewById(R.id.fragment_grill_settings_text_third))
+
         mMeatImage = view.findViewById(R.id.fragment_grill_settings_meat_image)
 
         mMeatButton = view.findViewById(R.id.fragment_grill_settings_meat_button)
@@ -86,36 +93,77 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         mGrillButton = view.findViewById(R.id.fragment_grill_settings_grill_button)
         mGrillButton.setOnTouchListener(mOnTouchListener)
 
-        mStateButton = view.findViewById(R.id.fragment_grill_settings_state_button)
-        mStateButton.setOnTouchListener(mOnTouchListener)
+        mDegreeButton = view.findViewById(R.id.fragment_grill_settings_state_button)
+        mDegreeButton.setOnTouchListener(mOnTouchListener)
     }
 
-    private fun playBlinkAnimation() {
-        when (mCurrentStep) {
+    private fun playCurrentStep() {
+        val textArray: Array<String>
+        val button = when (mCurrentStep) {
             Step.MEAT -> {
-                AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, mMeatButton)
+                textArray = getMeatSettingDescription()
+                mMeatButton
             }
             Step.WIDTH -> {
-                AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, mWidthButton)
+                textArray = getWidthSettingDescription()
+                mWidthButton
             }
             Step.GRILL -> {
-                AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, mGrillButton)
+                textArray = getGrillSettingDescription()
+                mGrillButton
             }
-            Step.STATE -> {
-                AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, mStateButton)
+            Step.DEGREE -> {
+                textArray = getDegreeSettingDescription()
+                mDegreeButton
             }
+            Step.FINISH -> {
+                textArray = getFinishDescription()
+                null
+            }
+        }
+        for (i in textArray.indices) {
+            if (textArray[i].isEmpty()) {
+                mTextList[i].visibility = View.GONE
+            } else {
+                mTextList[i].visibility = View.VISIBLE
+                mTextList[i].text = textArray[i]
+            }
+        }
+
+        val context = requireContext()
+        button?.let {
+            AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, button)
+            button.background = context.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
+            button.setTextColor(context.getColor(R.color.white))
         }
     }
 
-    private fun onStepCompleted(btn: TextView) {
-        context?.let {
-            btn.clearAnimation()
-            btn.background = it.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
-            btn.setTextColor(it.getColor(R.color.white))
+    private fun onStepCompleted() {
+        mPreviousStep = mCurrentStep
+        val button = when (mPreviousStep) {
+            Step.MEAT -> {
+                mCurrentStep = Step.WIDTH
+                mMeatButton
+            }
+            Step.WIDTH -> {
+                mCurrentStep = Step.GRILL
+                mWidthButton
+            }
+            Step.GRILL -> {
+                mCurrentStep = Step.DEGREE
+                mGrillButton
+            }
+            Step.DEGREE -> {
+                mCurrentStep = Step.FINISH
+                mDegreeButton
+            }
+            Step.FINISH -> {
+                null
+            }
         }
+        button?.clearAnimation()
+        playCurrentStep()
     }
-
-    override fun needTouchAnimation() = true
 
     override fun onMeatSelected(meatValue: Int) {
         when (Constants.getMeatType(meatValue)) {
@@ -127,7 +175,14 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
             }
             Constants.MeatType.MEAT_TYPE_ERROR -> {}
         }
-        mMeatButton.text = ResourceUtils.getMeatName(requireContext(), meatValue)
+
+        with (mMeatButton) {
+            text = ResourceUtils.getMeatName(requireContext(), meatValue)
+            clearAnimation()
+            background = context.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
+            setTextColor(context.getColor(R.color.white))
+        }
+        onStepCompleted()
     }
 
     override fun onWidthSelected() {
@@ -139,6 +194,56 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
     }
 
     override fun onDegreeSelected() {
-        mStateButton.text = ""
+        mDegreeButton.text = ""
+    }
+
+    override fun needTouchAnimation() = true
+
+    private fun getMeatSettingDescription(): Array<String> {
+        val res = requireContext().resources
+
+        val first = res.getString(R.string.meat_description_text_first)
+        val second = res.getString(R.string.meat_description_text_second)
+        val third = res.getString(R.string.meat_description_text_third)
+
+        return arrayOf(first, second, third)
+    }
+
+    private fun getWidthSettingDescription(): Array<String> {
+        val res = requireContext().resources
+
+        val first = res.getString(R.string.width_description_text_first)
+        val second = res.getString(R.string.width_description_text_second)
+        val third = res.getString(R.string.width_description_text_third)
+
+        return arrayOf(first, second, third)
+    }
+
+    private fun getGrillSettingDescription(): Array<String> {
+        val res = requireContext().resources
+
+        val second = res.getString(R.string.grill_description_text_second)
+        val third = res.getString(R.string.grill_description_text_third)
+
+        return arrayOf("", second, third)
+    }
+
+    private fun getDegreeSettingDescription(): Array<String> {
+        val res = requireContext().resources
+
+        val first = res.getString(R.string.degree_description_text_first)
+        val second = res.getString(R.string.degree_description_text_second)
+        val third = res.getString(R.string.degree_description_text_third)
+
+        return arrayOf(first, second, third)
+    }
+
+    private fun getFinishDescription(): Array<String> {
+        val res = requireContext().resources
+
+        val first = res.getString(R.string.finish_description_text_first)
+        val third = res.getString(R.string.finish_description_text_third)
+
+        return arrayOf(first, "", third)
     }
 }

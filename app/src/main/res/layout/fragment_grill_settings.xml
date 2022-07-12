@@ -19,25 +19,28 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_grill_settings_text_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="먼저,"
+                android:text="@string/meat_description_text_first"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_grill_settings_text_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="고기를 선택"
+                android:text="@string/meat_description_text_second"
                 android:textColor="@color/heavy_pink"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/fragment_grill_settings_text_third"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="해주세요"
+                android:text="@string/meat_description_text_third"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />

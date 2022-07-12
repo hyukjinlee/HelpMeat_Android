@@ -25,7 +25,8 @@ class GrillSettingsLayoutController(
         MEAT,
         WIDTH,
         GRILL,
-        STATE
+        DEGREE,
+        FINISH
     }
 
     private lateinit var mOKButton: Button
@@ -60,7 +61,10 @@ class GrillSettingsLayoutController(
                 Step.GRILL -> {
 
                 }
-                Step.STATE -> {
+                Step.DEGREE -> {
+
+                }
+                Step.FINISH -> {
 
                 }
             }
@@ -108,9 +112,10 @@ class GrillSettingsLayoutController(
             Step.GRILL -> {
                 AnimationUtils.playFullScaleUpAnimation(mContext, mMeatLayout)
             }
-            Step.STATE -> {
+            Step.DEGREE -> {
                 AnimationUtils.playFullScaleUpAnimation(mContext, mMeatLayout)
             }
+            Step.FINISH -> {}
         }
     }
 

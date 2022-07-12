@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">HelpMeat</string>
+
+    <string name="meat_description_text_first">먼저,</string>
+    <string name="meat_description_text_second">고기를 선택</string>
+    <string name="meat_description_text_third">해주세요</string>
+
+    <string name="width_description_text_first">이제 고기의</string>
+    <string name="width_description_text_second">두께를 측정</string>
+    <string name="width_description_text_third">해주세요</string>
+
+    <string name="grill_description_text_second">어디에서</string>
+    <string name="grill_description_text_third">구울건가요</string>
+
+    <string name="degree_description_text_first">원하는</string>
+    <string name="degree_description_text_second">굽기를</string>
+    <string name="degree_description_text_third">골라주세요</string>
+
+    <string name="finish_description_text_first">자! 고기를 구울</string>
+    <string name="finish_description_text_third">모든준비가 되었습니다</string>
 </resources>
