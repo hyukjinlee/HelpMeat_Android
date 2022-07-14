@@ -10,13 +10,14 @@ import com.project.helpmeat.R
 import com.project.helpmeat.components.MeatListAdapter
 import com.project.helpmeat.constant.Constants
 import com.project.helpmeat.utils.AnimationUtils
+import com.project.helpmeat.view.OkayButtonCallBack
 
 class MeatLayoutController(
     private val mContext: Context,
     private var mGrillSettingsDataController: GrillSettingsDataController,
     view: View,
     okayButtonCallBack: OkayButtonCallBack
-) : LayoutController(okayButtonCallBack) {
+) : LayoutControllable(okayButtonCallBack) {
 
     private lateinit var mMeatLayout: ConstraintLayout
     private lateinit var mMeatLayoutTopContainer: LinearLayout // Fork

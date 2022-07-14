@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -11,8 +12,8 @@ import com.project.helpmeat.R
 import com.project.helpmeat.constant.Constants
 import com.project.helpmeat.controller.GrillSettingsDataController
 import com.project.helpmeat.controller.GrillSettingsDataObserver
-import com.project.helpmeat.controller.GrillSettingsLayoutController
-import com.project.helpmeat.controller.GrillSettingsLayoutController.Step
+import com.project.helpmeat.controller.LayoutControllable
+import com.project.helpmeat.controller.MeatLayoutController
 import com.project.helpmeat.utils.AnimationUtils
 import com.project.helpmeat.utils.ResourceUtils
 import com.project.helpmeat.view.base.BaseFragment
@@ -20,13 +21,39 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
+class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayButtonCallBack {
     companion object {
         const val ALPHA_SHOW = 1.0F
         const val ALPHA_TRANSPARENT = 0.5F
         const val ALPHA_HIDE = 0.0F
 
         const val BLINK_ANIMATION_DURATION = 500L
+    }
+
+    enum class Step {
+        MEAT {
+            override fun index() = 0
+            override fun next() = WIDTH
+        },
+        WIDTH {
+            override fun index() = 1
+            override fun next() = GRILL
+        },
+        GRILL {
+            override fun index() = 2
+            override fun next() = DEGREE
+        },
+        DEGREE {
+            override fun index() = 3
+            override fun next() = FINISH
+        },
+        FINISH {
+            override fun index() = 4
+            override fun next(): Step? = null
+        };
+
+        abstract fun index(): Int
+        abstract fun next(): Step?
     }
 
     private val mTextList = ArrayList<TextView>()
@@ -36,12 +63,13 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
     private lateinit var mWidthButton: TextView
     private lateinit var mGrillButton: TextView
     private lateinit var mDegreeButton: TextView
+    private lateinit var mOKButton: Button
 
     private var mCurrentStep = Step.MEAT
 
     @Inject
     lateinit var mGrillSettingsDataController: GrillSettingsDataController
-    private lateinit var mGrillSettingsLayoutController: GrillSettingsLayoutController
+    private val mLayoutController = ArrayList<LayoutControllable>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +98,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
 
     private fun initGrillSettingsControllers(view: View) {
         mGrillSettingsDataController.addObserver(this)
-        mGrillSettingsLayoutController = GrillSettingsLayoutController(requireContext(), mGrillSettingsDataController, view)
+        mLayoutController.add(MeatLayoutController(requireContext(), mGrillSettingsDataController, view, this))
     }
 
     private fun initSettingMainComponents(view: View) {
@@ -83,7 +111,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         mMeatButton = view.findViewById(R.id.fragment_grill_settings_meat_button)
         mMeatButton.setOnTouchListener(mOnTouchListener)
         mMeatButton.setOnClickListener {
-            mGrillSettingsLayoutController.display(Step.MEAT)
+            mLayoutController[Step.MEAT.index()].display()
         }
 
         mWidthButton = view.findViewById(R.id.fragment_grill_settings_width_button)
@@ -94,6 +122,11 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
 
         mDegreeButton = view.findViewById(R.id.fragment_grill_settings_state_button)
         mDegreeButton.setOnTouchListener(mOnTouchListener)
+
+        mOKButton = view.findViewById(R.id.fragment_grill_settings_ok_button)
+        mOKButton.setOnClickListener {
+            mLayoutController[mCurrentStep.index()].complete()
+        }
     }
 
     private fun playCurrentStep() {
@@ -149,19 +182,19 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
     private fun getDescription(step: Step): Array<String> {
         return when (step) {
             Step.MEAT -> {
-                getMeatSettingDescription()
+                ResourceUtils.getMeatSettingDescription(requireContext())
             }
             Step.WIDTH -> {
-                getWidthSettingDescription()
+                ResourceUtils.getWidthSettingDescription(requireContext())
             }
             Step.GRILL -> {
-                getGrillSettingDescription()
+                ResourceUtils.getGrillSettingDescription(requireContext())
             }
             Step.DEGREE -> {
-                getDegreeSettingDescription()
+                ResourceUtils.getDegreeSettingDescription(requireContext())
             }
             Step.FINISH -> {
-                getFinishDescription()
+                ResourceUtils.getFinishDescription(requireContext())
             }
         }
     }
@@ -201,53 +234,19 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         onStepCompleted(Step.DEGREE)
     }
 
+    override fun showOKButton() {
+        mOKButton.visibility = View.VISIBLE
+    }
+
+    override fun hideOKButton() {
+        mOKButton.visibility = View.GONE
+    }
+
     override fun needTouchAnimation() = true
+}
 
-    private fun getMeatSettingDescription(): Array<String> {
-        val res = requireContext().resources
+interface OkayButtonCallBack {
+    fun showOKButton()
 
-        val first = res.getString(R.string.meat_description_text_first)
-        val second = res.getString(R.string.meat_description_text_second)
-        val third = res.getString(R.string.meat_description_text_third)
-
-        return arrayOf(first, second, third)
-    }
-
-    private fun getWidthSettingDescription(): Array<String> {
-        val res = requireContext().resources
-
-        val first = res.getString(R.string.width_description_text_first)
-        val second = res.getString(R.string.width_description_text_second)
-        val third = res.getString(R.string.width_description_text_third)
-
-        return arrayOf(first, second, third)
-    }
-
-    private fun getGrillSettingDescription(): Array<String> {
-        val res = requireContext().resources
-
-        val second = res.getString(R.string.grill_description_text_second)
-        val third = res.getString(R.string.grill_description_text_third)
-
-        return arrayOf("", second, third)
-    }
-
-    private fun getDegreeSettingDescription(): Array<String> {
-        val res = requireContext().resources
-
-        val first = res.getString(R.string.degree_description_text_first)
-        val second = res.getString(R.string.degree_description_text_second)
-        val third = res.getString(R.string.degree_description_text_third)
-
-        return arrayOf(first, second, third)
-    }
-
-    private fun getFinishDescription(): Array<String> {
-        val res = requireContext().resources
-
-        val first = res.getString(R.string.finish_description_text_first)
-        val third = res.getString(R.string.finish_description_text_third)
-
-        return arrayOf(first, "", third)
-    }
+    fun hideOKButton()
 }

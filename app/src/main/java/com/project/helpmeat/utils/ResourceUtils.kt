@@ -28,5 +28,53 @@ class ResourceUtils {
 
             return meatName
         }
+
+        fun getMeatSettingDescription(context: Context): Array<String> {
+            val res = context.resources
+
+            val first = res.getString(R.string.meat_description_text_first)
+            val second = res.getString(R.string.meat_description_text_second)
+            val third = res.getString(R.string.meat_description_text_third)
+
+            return arrayOf(first, second, third)
+        }
+
+        fun getWidthSettingDescription(context: Context): Array<String> {
+            val res = context.resources
+
+            val first = res.getString(R.string.width_description_text_first)
+            val second = res.getString(R.string.width_description_text_second)
+            val third = res.getString(R.string.width_description_text_third)
+
+            return arrayOf(first, second, third)
+        }
+
+        fun getGrillSettingDescription(context: Context): Array<String> {
+            val res = context.resources
+
+            val second = res.getString(R.string.grill_description_text_second)
+            val third = res.getString(R.string.grill_description_text_third)
+
+            return arrayOf("", second, third)
+        }
+
+        fun getDegreeSettingDescription(context: Context): Array<String> {
+            val res = context.resources
+
+            val first = res.getString(R.string.degree_description_text_first)
+            val second = res.getString(R.string.degree_description_text_second)
+            val third = res.getString(R.string.degree_description_text_third)
+
+            return arrayOf(first, second, third)
+        }
+
+        fun getFinishDescription(context: Context): Array<String> {
+            val res = context.resources
+
+            val first = res.getString(R.string.finish_description_text_first)
+            val third = res.getString(R.string.finish_description_text_third)
+
+            return arrayOf(first, "", third)
+        }
     }
 }

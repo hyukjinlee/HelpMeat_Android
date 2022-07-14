@@ -1,8 +1,9 @@
 package com.project.helpmeat.controller
 
 import android.view.View
+import com.project.helpmeat.view.OkayButtonCallBack
 
-abstract class LayoutController(private val mOkayButtonCallBack: OkayButtonCallBack) {
+abstract class LayoutControllable(private val mOkayButtonCallBack: OkayButtonCallBack) {
     abstract fun initLayout(view: View)
 
     abstract fun display()
