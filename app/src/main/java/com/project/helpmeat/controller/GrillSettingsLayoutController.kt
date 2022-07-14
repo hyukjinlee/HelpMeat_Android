@@ -22,11 +22,29 @@ class GrillSettingsLayoutController(
     }
 
     enum class Step {
-        MEAT,
-        WIDTH,
-        GRILL,
-        DEGREE,
-        FINISH
+        MEAT {
+            override fun index() = 1
+            override fun next() = WIDTH
+        },
+        WIDTH {
+            override fun index() = 2
+            override fun next() = GRILL
+        },
+        GRILL {
+            override fun index() = 3
+            override fun next() = DEGREE
+        },
+        DEGREE {
+            override fun index() = 4
+            override fun next() = FINISH
+        },
+        FINISH {
+            override fun index() = 5
+            override fun next(): Step? = null
+        };
+
+        abstract fun index(): Int
+        abstract fun next(): Step?
     }
 
     private lateinit var mOKButton: Button

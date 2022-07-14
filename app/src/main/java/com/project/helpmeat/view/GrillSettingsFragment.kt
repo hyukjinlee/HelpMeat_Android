@@ -37,7 +37,6 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
     private lateinit var mGrillButton: TextView
     private lateinit var mDegreeButton: TextView
 
-    private var mPreviousStep = Step.MEAT
     private var mCurrentStep = Step.MEAT
 
     @Inject
@@ -98,29 +97,8 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
     }
 
     private fun playCurrentStep() {
-        val textArray: Array<String>
-        val button = when (mCurrentStep) {
-            Step.MEAT -> {
-                textArray = getMeatSettingDescription()
-                mMeatButton
-            }
-            Step.WIDTH -> {
-                textArray = getWidthSettingDescription()
-                mWidthButton
-            }
-            Step.GRILL -> {
-                textArray = getGrillSettingDescription()
-                mGrillButton
-            }
-            Step.DEGREE -> {
-                textArray = getDegreeSettingDescription()
-                mDegreeButton
-            }
-            Step.FINISH -> {
-                textArray = getFinishDescription()
-                null
-            }
-        }
+        val textArray = getDescription(mCurrentStep)
+
         for (i in textArray.indices) {
             if (textArray[i].isEmpty()) {
                 mTextList[i].visibility = View.GONE
@@ -131,38 +109,61 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         }
 
         val context = requireContext()
-        button?.let {
-            AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, button)
-            button.background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
-            button.setTextColor(context.getColor(R.color.white))
+        getButton(mCurrentStep)?.let {
+            AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, it)
+            it.background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
+            it.setTextColor(context.getColor(R.color.white))
         }
     }
 
-    private fun onStepCompleted() {
-        mPreviousStep = mCurrentStep
-        val button = when (mPreviousStep) {
+    private fun onStepCompleted(completedStep: Step) {
+        if (completedStep.index() >= mCurrentStep.index()) {
+            mCurrentStep.next()?.let {
+                mCurrentStep = it
+            }
+            getButton(completedStep)?.clearAnimation()
+            playCurrentStep()
+        }
+    }
+
+    private fun getButton(step: Step): TextView? {
+        return when (step) {
             Step.MEAT -> {
-                mCurrentStep = Step.WIDTH
                 mMeatButton
             }
             Step.WIDTH -> {
-                mCurrentStep = Step.GRILL
                 mWidthButton
             }
             Step.GRILL -> {
-                mCurrentStep = Step.DEGREE
                 mGrillButton
             }
             Step.DEGREE -> {
-                mCurrentStep = Step.FINISH
                 mDegreeButton
             }
             Step.FINISH -> {
                 null
             }
         }
-        button?.clearAnimation()
-        playCurrentStep()
+    }
+
+    private fun getDescription(step: Step): Array<String> {
+        return when (step) {
+            Step.MEAT -> {
+                getMeatSettingDescription()
+            }
+            Step.WIDTH -> {
+                getWidthSettingDescription()
+            }
+            Step.GRILL -> {
+                getGrillSettingDescription()
+            }
+            Step.DEGREE -> {
+                getDegreeSettingDescription()
+            }
+            Step.FINISH -> {
+                getFinishDescription()
+            }
+        }
     }
 
     override fun onMeatSelected(meatValue: Int) {
@@ -176,25 +177,28 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
             Constants.MeatType.MEAT_TYPE_ERROR -> {}
         }
 
-        with (mMeatButton) {
+        with(mMeatButton) {
             text = ResourceUtils.getMeatName(requireContext(), meatValue)
             clearAnimation()
             background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
             setTextColor(context.getColor(R.color.white))
         }
-        onStepCompleted()
+        onStepCompleted(Step.MEAT)
     }
 
     override fun onWidthSelected() {
         mWidthButton.text = ""
+        onStepCompleted(Step.WIDTH)
     }
 
     override fun onGrillSelected() {
         mGrillButton.text = ""
+        onStepCompleted(Step.GRILL)
     }
 
     override fun onDegreeSelected() {
         mDegreeButton.text = ""
+        onStepCompleted(Step.DEGREE)
     }
 
     override fun needTouchAnimation() = true
