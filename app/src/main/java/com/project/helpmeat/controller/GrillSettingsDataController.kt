@@ -7,27 +7,23 @@ class GrillSettingsDataController {
 
     private val mObserverList = ArrayList<GrillSettingsDataObserver>()
 
-    private var mMeatValue = 0
-
     fun addObserver(observer: GrillSettingsDataObserver) {
         mObserverList.add(observer)
-    }
-
-    fun removeObserver(observer: GrillSettingsDataObserver) {
-        mObserverList.remove(observer)
     }
 
     fun removeObserverAll() {
         mObserverList.clear()
     }
 
-    fun onMeatSelected(meatValue: Int) {
-        mMeatValue = meatValue
+    fun notifyMeatSelected(meatValue: Int) {
+        mObserverList.forEach { o ->
+            o.onMeatSelected(meatValue)
+        }
     }
 
-    fun notifyMeatCompleted() {
+    fun notifyWidthSelected(widthValue: Float) {
         mObserverList.forEach { o ->
-            o.onMeatSelected(mMeatValue)
+            o.onWidthSelected(widthValue)
         }
     }
 
@@ -35,7 +31,7 @@ class GrillSettingsDataController {
 interface GrillSettingsDataObserver {
     fun onMeatSelected(meatValue: Int)
 
-    fun onWidthSelected()
+    fun onWidthSelected(width: Float)
 
     fun onGrillSelected()
 

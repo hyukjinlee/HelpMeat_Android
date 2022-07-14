@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_grill_settings_width"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/layout_grill_settings_margin_horizontal"
+    android:background="@drawable/bg_rounded_rectangle_60_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/layout_grill_settings_width_sign"
+        android:layout_width="@dimen/layout_grill_settings_width_sign_width"
+        android:layout_height="@dimen/layout_grill_settings_width_sign_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/layout_grill_settings_width_sign_margin_top"
+        android:layout_toStartOf="@id/layout_grill_settings_width_ruler"
+        android:background="@drawable/horizontal_sign"
+        android:gravity="center_vertical|start"
+        android:text="@string/layout_grill_settings_width_ruler_initial_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/layout_grill_settings_width_sign_text_size" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/layout_grill_settings_width_ruler"
+        android:layout_width="@dimen/layout_grill_settings_width_ruler_width"
+        android:layout_height="@dimen/layout_grill_settings_width_ruler_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/layout_grill_settings_width_ruler_margin_top"
+        android:layout_marginEnd="@dimen/layout_grill_settings_width_ruler_margin_end"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ruler" />
+
+</RelativeLayout>

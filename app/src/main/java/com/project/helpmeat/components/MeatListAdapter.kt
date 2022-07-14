@@ -10,16 +10,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.helpmeat.R
 import com.project.helpmeat.constant.Constants.MeatType
-import com.project.helpmeat.controller.GrillSettingsDataController
 import com.project.helpmeat.utils.ResourceUtils
+import java.util.function.Consumer
 
-class MeatListAdapter(private val mContext: Context, private val mGrillSettingsDataController: GrillSettingsDataController)
+class MeatListAdapter(private val mContext: Context, private val mOnClickCallback: Consumer<Void?>)
     : RecyclerView.Adapter<MeatListAdapter.MeatListAdapterHolder>() {
     private var mBeforeSelectedItem: MeatListAdapterHolder? = null
 
     private lateinit var mMeatType: MeatType
     private var mMeatList: List<String> = ArrayList()
     private var mBorderDrawable = mContext.getDrawable(R.drawable.bg_rounded_empty_rectangle_30_pink)
+    private var mMeatValue = 0
 
     inner class MeatListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mRoot: RelativeLayout = itemView.findViewById(R.id.root)
@@ -34,8 +35,8 @@ class MeatListAdapter(private val mContext: Context, private val mGrillSettingsD
                 mBeforeSelectedItem?.unselect()
                 select()
 
-                val meatValue = mMeatType.value + mTextView.tag.toString().toInt()
-                mGrillSettingsDataController.onMeatSelected(meatValue)
+                mMeatValue = mMeatType.value + mTextView.tag.toString().toInt()
+                mOnClickCallback.accept(null)
             }
         }
 
@@ -72,6 +73,8 @@ class MeatListAdapter(private val mContext: Context, private val mGrillSettingsD
         }
         notifyDataSetChanged()
     }
+
+    fun getSelectedMeatValue() = mMeatValue
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeatListAdapterHolder {
         return MeatListAdapterHolder(

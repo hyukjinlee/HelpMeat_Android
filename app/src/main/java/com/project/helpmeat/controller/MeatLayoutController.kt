@@ -13,11 +13,11 @@ import com.project.helpmeat.utils.AnimationUtils
 import com.project.helpmeat.view.OkayButtonCallBack
 
 class MeatLayoutController(
-    private val mContext: Context,
-    private var mGrillSettingsDataController: GrillSettingsDataController,
+    context: Context,
+    grillSettingsDataController: GrillSettingsDataController,
     view: View,
     okayButtonCallBack: OkayButtonCallBack
-) : LayoutControllable(okayButtonCallBack) {
+) : LayoutControllable(context, grillSettingsDataController, okayButtonCallBack) {
 
     private lateinit var mMeatLayout: ConstraintLayout
     private lateinit var mMeatLayoutTopContainer: LinearLayout // Fork
@@ -38,14 +38,12 @@ class MeatLayoutController(
         mMeatLayoutTopContainer.setOnClickListener {
             mDetailMeatListAdapter.updateMeatType(Constants.MeatType.MEAT_TYPE_FORK)
             AnimationUtils.playMoveLeftAnimation(mContext, mMeatLayout, mMeatDetailLayout)
-            showOKButton()
         }
 
         mMeatLayoutBottomContainer = view.findViewById(R.id.layout_grill_settings_meat_bottom_container)
         mMeatLayoutBottomContainer.setOnClickListener {
             mDetailMeatListAdapter.updateMeatType(Constants.MeatType.MEAT_TYPE_BEEF)
             AnimationUtils.playMoveLeftAnimation(mContext, mMeatLayout, mMeatDetailLayout)
-            showOKButton()
         }
 
         mMeatDetailLayout = view.findViewById(R.id.fragment_grill_settings_meat_detail)
@@ -56,7 +54,9 @@ class MeatLayoutController(
         }
 
         mDetailMeatList = view.findViewById(R.id.fragment_grill_settings_meat_detail_list)
-        mDetailMeatListAdapter = MeatListAdapter(mContext, mGrillSettingsDataController)
+        mDetailMeatListAdapter = MeatListAdapter(mContext) {
+            showOKButton()
+        }
         mDetailMeatList.adapter = mDetailMeatListAdapter
     }
 
@@ -64,8 +64,8 @@ class MeatLayoutController(
         AnimationUtils.playFullScaleUpAnimation(mContext, mMeatLayout)
     }
 
-    override fun complete() {
-        mGrillSettingsDataController.notifyMeatCompleted()
+    override fun select() {
+        mGrillSettingsDataController.notifyMeatSelected(mDetailMeatListAdapter.getSelectedMeatValue())
 
         AnimationUtils.playFullScaleDownAnimation(mContext, mMeatDetailLayout)
         hideOKButton()

@@ -18,4 +18,7 @@
 
     <string name="finish_description_text_first">자! 고기를 구울</string>
     <string name="finish_description_text_third">모든준비가 되었습니다</string>
+
+    <string name="layout_grill_settings_width_ruler_initial_text">1.0cm</string>
+    <string name="layout_grill_settings_width_ruler_text">%1$.1fcm</string>
 </resources>

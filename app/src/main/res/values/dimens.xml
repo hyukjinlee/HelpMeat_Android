@@ -47,6 +47,14 @@
     <dimen name="layout_grill_settings_meat_text_size">90px</dimen>
     <dimen name="layout_grill_settings_meat_text_margin_start">60px</dimen>
     <dimen name="layout_grill_settings_meat_between_line_margin_horizontal">60px</dimen>
+    <dimen name="layout_grill_settings_width_sign_width">300px</dimen>
+    <dimen name="layout_grill_settings_width_sign_height">130px</dimen>
+    <dimen name="layout_grill_settings_width_sign_margin_top">180px</dimen>
+    <dimen name="layout_grill_settings_width_sign_text_size">90px</dimen>
+    <dimen name="layout_grill_settings_width_ruler_width">320px</dimen>
+    <dimen name="layout_grill_settings_width_ruler_height">900px</dimen>
+    <dimen name="layout_grill_settings_width_ruler_margin_top">50px</dimen>
+    <dimen name="layout_grill_settings_width_ruler_margin_end">100px</dimen>
 
     <dimen name="layout_meat_list_item_margin_start">60px</dimen>
     <dimen name="layout_meat_list_item_height">150px</dimen>

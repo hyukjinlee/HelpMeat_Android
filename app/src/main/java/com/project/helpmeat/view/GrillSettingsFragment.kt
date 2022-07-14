@@ -10,10 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.project.helpmeat.R
 import com.project.helpmeat.constant.Constants
-import com.project.helpmeat.controller.GrillSettingsDataController
-import com.project.helpmeat.controller.GrillSettingsDataObserver
-import com.project.helpmeat.controller.LayoutControllable
-import com.project.helpmeat.controller.MeatLayoutController
+import com.project.helpmeat.controller.*
 import com.project.helpmeat.utils.AnimationUtils
 import com.project.helpmeat.utils.ResourceUtils
 import com.project.helpmeat.view.base.BaseFragment
@@ -56,16 +53,25 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
         abstract fun next(): Step?
     }
 
+    private fun toStep(index: Int): Step? {
+        return when (index){
+            Step.MEAT.index() -> Step.MEAT
+            Step.WIDTH.index() -> Step.WIDTH
+            Step.GRILL.index() -> Step.GRILL
+            Step.DEGREE.index() -> Step.DEGREE
+            Step.FINISH.index() -> Step.FINISH
+            else -> null
+        }
+    }
+
     private val mTextList = ArrayList<TextView>()
 
     private lateinit var mMeatImage: ImageView
-    private lateinit var mMeatButton: TextView
-    private lateinit var mWidthButton: TextView
-    private lateinit var mGrillButton: TextView
-    private lateinit var mDegreeButton: TextView
+    private val mSettingButtonList = ArrayList<TextView>()
     private lateinit var mOKButton: Button
 
     private var mCurrentStep = Step.MEAT
+    private var mLastStep = Step.MEAT
 
     @Inject
     lateinit var mGrillSettingsDataController: GrillSettingsDataController
@@ -87,7 +93,8 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
 
         initGrillSettingsControllers(view)
         initSettingMainComponents(view)
-        playCurrentStep()
+
+        moveToNext()
     }
 
     override fun onDestroyView() {
@@ -99,6 +106,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
     private fun initGrillSettingsControllers(view: View) {
         mGrillSettingsDataController.addObserver(this)
         mLayoutController.add(MeatLayoutController(requireContext(), mGrillSettingsDataController, view, this))
+        mLayoutController.add(WidthLayoutController(requireContext(), mGrillSettingsDataController, view, this))
     }
 
     private fun initSettingMainComponents(view: View) {
@@ -108,29 +116,37 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
 
         mMeatImage = view.findViewById(R.id.fragment_grill_settings_meat_image)
 
-        mMeatButton = view.findViewById(R.id.fragment_grill_settings_meat_button)
-        mMeatButton.setOnTouchListener(mOnTouchListener)
-        mMeatButton.setOnClickListener {
-            mLayoutController[Step.MEAT.index()].display()
+        mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_meat_button))
+        mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_width_button))
+        mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_grill_button))
+        mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_degree_button))
+
+        for (i in Step.MEAT.index()..Step.DEGREE.index()) {
+            mSettingButtonList[i].setOnTouchListener(mOnTouchListener)
+            mSettingButtonList[i].setOnClickListener {
+                if (it.isClickable) {
+                    mCurrentStep = toStep(i)!!
+                    mLayoutController[i].display()
+                }
+            }
+            mSettingButtonList[i].isClickable = false
         }
-
-        mWidthButton = view.findViewById(R.id.fragment_grill_settings_width_button)
-        mWidthButton.setOnTouchListener(mOnTouchListener)
-
-        mGrillButton = view.findViewById(R.id.fragment_grill_settings_grill_button)
-        mGrillButton.setOnTouchListener(mOnTouchListener)
-
-        mDegreeButton = view.findViewById(R.id.fragment_grill_settings_state_button)
-        mDegreeButton.setOnTouchListener(mOnTouchListener)
 
         mOKButton = view.findViewById(R.id.fragment_grill_settings_ok_button)
         mOKButton.setOnClickListener {
-            mLayoutController[mCurrentStep.index()].complete()
+            mLayoutController[mCurrentStep.index()].select()
         }
     }
 
-    private fun playCurrentStep() {
-        val textArray = getDescription(mCurrentStep)
+    private fun moveToNext() {
+        try {
+            mLayoutController[mLastStep.index()].prepare()
+        } catch (e: IndexOutOfBoundsException) {
+
+        }
+        mSettingButtonList[mLastStep.index()].isClickable = true
+
+        val textArray = getDescription(mLastStep)
 
         for (i in textArray.indices) {
             if (textArray[i].isEmpty()) {
@@ -142,42 +158,27 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
         }
 
         val context = requireContext()
-        getButton(mCurrentStep)?.let {
-            AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, it)
-            it.background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
-            it.setTextColor(context.getColor(R.color.white))
+
+        if (mLastStep.index() < Step.FINISH.index()) {
+            with (mSettingButtonList[mLastStep.index()]) {
+                AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, this)
+                background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
+                setTextColor(context.getColor(R.color.white))
+            }
         }
     }
 
-    private fun onStepCompleted(completedStep: Step) {
-        if (completedStep.index() >= mCurrentStep.index()) {
-            mCurrentStep.next()?.let {
-                mCurrentStep = it
+    private fun onStepCompleted() {
+        if (mCurrentStep.index() == mLastStep.index()) {
+            mSettingButtonList[mLastStep.index()].clearAnimation()
+
+            mLastStep.next()?.let {
+                mLastStep = it
             }
-            getButton(completedStep)?.clearAnimation()
-            playCurrentStep()
+            moveToNext()
         }
     }
 
-    private fun getButton(step: Step): TextView? {
-        return when (step) {
-            Step.MEAT -> {
-                mMeatButton
-            }
-            Step.WIDTH -> {
-                mWidthButton
-            }
-            Step.GRILL -> {
-                mGrillButton
-            }
-            Step.DEGREE -> {
-                mDegreeButton
-            }
-            Step.FINISH -> {
-                null
-            }
-        }
-    }
 
     private fun getDescription(step: Step): Array<String> {
         return when (step) {
@@ -210,28 +211,28 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
             Constants.MeatType.MEAT_TYPE_ERROR -> {}
         }
 
-        with(mMeatButton) {
+        with (mSettingButtonList[Step.MEAT.index()]) {
             text = ResourceUtils.getMeatName(requireContext(), meatValue)
             clearAnimation()
             background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
             setTextColor(context.getColor(R.color.white))
         }
-        onStepCompleted(Step.MEAT)
+        onStepCompleted()
     }
 
-    override fun onWidthSelected() {
-        mWidthButton.text = ""
-        onStepCompleted(Step.WIDTH)
+    override fun onWidthSelected(width: Float) {
+        mSettingButtonList[Step.WIDTH.index()].text = "$width cm"
+        onStepCompleted()
     }
 
     override fun onGrillSelected() {
-        mGrillButton.text = ""
-        onStepCompleted(Step.GRILL)
+        mSettingButtonList[Step.GRILL.index()].text = ""
+        onStepCompleted()
     }
 
     override fun onDegreeSelected() {
-        mDegreeButton.text = ""
-        onStepCompleted(Step.DEGREE)
+        mSettingButtonList[Step.DEGREE.index()].text = ""
+        onStepCompleted()
     }
 
     override fun showOKButton() {

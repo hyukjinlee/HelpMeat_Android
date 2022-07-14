@@ -58,6 +58,8 @@
             <include layout="@layout/layout_grill_settings_meat" />
 
             <include layout="@layout/layout_grill_settings_meat_detail" />
+
+            <include layout="@layout/layout_grill_settings_width" />
         </FrameLayout>
 
         <FrameLayout

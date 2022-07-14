@@ -115,7 +115,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
 
         @SuppressLint("ClickableViewAccessibility")
         mOnTouchListener = View.OnTouchListener { v, e ->
-            if (v != null && v.isClickable && e != null) {
+            if (v.isClickable) {
                 when (e.action) {
                     MotionEvent.ACTION_DOWN -> {
                         if (!mIsItemClicked) {
