@@ -83,7 +83,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver {
         mMeatButton = view.findViewById(R.id.fragment_grill_settings_meat_button)
         mMeatButton.setOnTouchListener(mOnTouchListener)
         mMeatButton.setOnClickListener {
-            mGrillSettingsLayoutController.showLayout(Step.MEAT)
+            mGrillSettingsLayoutController.display(Step.MEAT)
         }
 
         mWidthButton = view.findViewById(R.id.fragment_grill_settings_width_button)
