@@ -19,7 +19,7 @@ class MeatListAdapter(private val mContext: Context, private val mOnClickCallbac
 
     private lateinit var mMeatType: MeatType
     private var mMeatList: List<String> = ArrayList()
-    private var mBorderDrawable = mContext.getDrawable(R.drawable.bg_rounded_empty_rectangle_30_pink)
+    private var mBorderDrawable = mContext.getDrawable(R.drawable.bg_rounded_empty_rectangle_10_pink)
     private var mMeatValue = 0
 
     inner class MeatListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

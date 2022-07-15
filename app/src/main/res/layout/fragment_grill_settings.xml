@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_intro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pink">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_grill_settings_content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,10 +14,14 @@
         <LinearLayout
             android:id="@+id/fragment_grill_settings_top_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/fragment_grill_settings_top_container_height"
-            android:layout_alignParentTop="true"
+            android:layout_height="@dimen/size_free"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_middle_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="0.25">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragment_grill_settings_text_first"
@@ -49,9 +54,12 @@
         <FrameLayout
             android:id="@+id/fragment_grill_settings_middle_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/fragment_grill_settings_bottom_container"
-            android:layout_below="@id/fragment_grill_settings_top_container">
+            android:layout_height="@dimen/size_free"
+            app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_bottom_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_top_container"
+            app:layout_constraintVertical_weight="0.55">
 
             <include layout="@layout/layout_grill_settings_main" />
 
@@ -65,19 +73,23 @@
         <FrameLayout
             android:id="@+id/fragment_grill_settings_bottom_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/fragment_grill_settings_bottom_container_height"
-            android:layout_alignParentBottom="true">
+            android:layout_height="@dimen/size_free"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_middle_container"
+            app:layout_constraintVertical_weight="0.20">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/fragment_grill_settings_ok_button"
                 android:layout_width="@dimen/fragment_grill_settings_ok_button_width"
                 android:layout_height="@dimen/fragment_grill_settings_ok_button_height"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_rounded_rectangle_150_pink"
+                android:background="@drawable/bg_rounded_rectangle_50_pink"
                 android:text="OK"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fragment_grill_settings_ok_button_text_size"
                 android:visibility="gone" />
         </FrameLayout>
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

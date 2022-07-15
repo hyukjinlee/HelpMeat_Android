@@ -37,26 +37,26 @@
     <style name="TextViewTheme" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:lineSpacingExtra">0px</item>
-        <item name="android:padding">15px</item>
+        <item name="android:lineSpacingExtra">@dimen/default_line_spacing_extra</item>
+        <item name="android:padding">@dimen/default_text_view_padding</item>
     </style>
     <style name="NonePaddingTextViewTheme" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:lineSpacingExtra">0px</item>
+        <item name="android:lineSpacingExtra">@dimen/default_line_spacing_extra</item>
     </style>
 
     <!-- EditText theme. -->
     <style name="EditTextTheme" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:padding">30px</item>
+        <item name="android:padding">@dimen/default_edit_text_padding</item>
     </style>
 
     <!-- Button theme. -->
     <style name="ButtonTheme" parent="Widget.AppCompat.Button">
         <item name="android:fontFamily">@font/helpmeat_basic</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:padding">30px</item>
+        <item name="android:padding">@dimen/default_button_padding</item>
     </style>
 </resources>

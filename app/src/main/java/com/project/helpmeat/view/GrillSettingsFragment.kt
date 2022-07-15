@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.project.helpmeat.R
 import com.project.helpmeat.constant.Constants
 import com.project.helpmeat.controller.*
@@ -54,7 +54,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
     }
 
     private fun toStep(index: Int): Step? {
-        return when (index){
+        return when (index) {
             Step.MEAT.index() -> Step.MEAT
             Step.WIDTH.index() -> Step.WIDTH
             Step.GRILL.index() -> Step.GRILL
@@ -88,7 +88,7 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val root = view.findViewById<RelativeLayout>(R.id.fragment_grill_settings_content_container)
+        val root = view.findViewById<ConstraintLayout>(R.id.fragment_grill_settings_content_container)
         limitContentViewArea(root, false)
 
         initGrillSettingsControllers(view)
@@ -125,8 +125,12 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
             mSettingButtonList[i].setOnTouchListener(mOnTouchListener)
             mSettingButtonList[i].setOnClickListener {
                 if (it.isClickable) {
-                    mCurrentStep = toStep(i)!!
-                    mLayoutController[i].display()
+                    try {
+                        mCurrentStep = toStep(i)!!
+                        mLayoutController[i].display()
+                    } catch (e: IndexOutOfBoundsException) {
+
+                    }
                 }
             }
             mSettingButtonList[i].isClickable = false
@@ -134,7 +138,11 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
 
         mOKButton = view.findViewById(R.id.fragment_grill_settings_ok_button)
         mOKButton.setOnClickListener {
-            mLayoutController[mCurrentStep.index()].select()
+            try {
+                mLayoutController[mCurrentStep.index()].select()
+            } catch (e: IndexOutOfBoundsException) {
+
+            }
         }
     }
 
@@ -160,9 +168,9 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
         val context = requireContext()
 
         if (mLastStep.index() < Step.FINISH.index()) {
-            with (mSettingButtonList[mLastStep.index()]) {
+            with(mSettingButtonList[mLastStep.index()]) {
                 AnimationUtils.playBlinkAnimation(BLINK_ANIMATION_DURATION, this)
-                background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
+                background = context.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
                 setTextColor(context.getColor(R.color.white))
             }
         }
@@ -211,10 +219,10 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
             Constants.MeatType.MEAT_TYPE_ERROR -> {}
         }
 
-        with (mSettingButtonList[Step.MEAT.index()]) {
+        with(mSettingButtonList[Step.MEAT.index()]) {
             text = ResourceUtils.getMeatName(requireContext(), meatValue)
             clearAnimation()
-            background = context.getDrawable(R.drawable.bg_rounded_rectangle_150_pink)
+            background = context.getDrawable(R.drawable.bg_rounded_rectangle_50_pink)
             setTextColor(context.getColor(R.color.white))
         }
         onStepCompleted()

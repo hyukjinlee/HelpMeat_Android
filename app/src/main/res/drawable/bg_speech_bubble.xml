@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:bottom="150px">
+    <item android:bottom="@dimen/bg_speech_bubble_rectangle_bottom">
         <shape android:shape="rectangle">
             <solid android:color="@color/white" />
-            <corners android:radius="150px" />
+            <corners android:radius="@dimen/bg_speech_bubble_rectangle_radius" />
         </shape>
     </item>
-    <item android:top="150px" android:left="300px">
+    <item android:top="@dimen/bg_speech_bubble_triangle_top" android:left="@dimen/bg_speech_bubble_triangle_left">
         <rotate
             android:fromDegrees="-45"
             android:toDegrees="-45"

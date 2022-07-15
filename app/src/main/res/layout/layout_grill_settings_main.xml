@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_grill_settings_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,55 +10,66 @@
         android:id="@+id/fragment_grill_settings_meat_image"
         android:layout_width="@dimen/fragment_grill_settings_meat_image_size"
         android:layout_height="@dimen/fragment_grill_settings_meat_image_size"
-        android:layout_gravity="center"
         android:scaleType="fitCenter"
-        android:src="@drawable/beef_with_shadow" />
+        android:src="@drawable/beef_with_shadow"
+        app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_grill_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_meat_button" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_grill_settings_meat_button"
         android:layout_width="@dimen/fragment_grill_settings_button_width"
         android:layout_height="@dimen/fragment_grill_settings_button_height"
-        android:layout_gravity="start|center_vertical"
-        android:layout_marginBottom="@dimen/fragment_grill_settings_button_margin"
-        android:background="@drawable/bg_rounded_rectangle_150_pink"
+        android:background="@drawable/bg_rounded_rectangle_50_pink"
         android:gravity="center"
         android:text="고기"
         android:textColor="@color/white"
-        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size" />
+        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size"
+        app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_meat_image"
+        app:layout_constraintEnd_toStartOf="@id/fragment_grill_settings_width_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_grill_settings_width_button"
         android:layout_width="@dimen/fragment_grill_settings_button_width"
         android:layout_height="@dimen/fragment_grill_settings_button_height"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginBottom="@dimen/fragment_grill_settings_button_margin"
-        android:background="@drawable/bg_rounded_rectangle_150_white"
+        android:background="@drawable/bg_rounded_rectangle_50_white"
         android:gravity="center"
         android:text="두께"
         android:textColor="@color/heavy_pink"
-        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size" />
+        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size"
+        app:layout_constraintBottom_toTopOf="@id/fragment_grill_settings_meat_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fragment_grill_settings_meat_button"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_grill_settings_grill_button"
         android:layout_width="@dimen/fragment_grill_settings_button_width"
         android:layout_height="@dimen/fragment_grill_settings_button_height"
-        android:layout_gravity="start|center_vertical"
-        android:layout_marginTop="@dimen/fragment_grill_settings_button_margin"
-        android:background="@drawable/bg_rounded_rectangle_150_white"
+        android:background="@drawable/bg_rounded_rectangle_50_white"
         android:gravity="center"
         android:text="불판"
         android:textColor="@color/heavy_pink"
-        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size" />
+        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_grill_settings_degree_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_meat_image" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/fragment_grill_settings_degree_button"
         android:layout_width="@dimen/fragment_grill_settings_button_width"
         android:layout_height="@dimen/fragment_grill_settings_button_height"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginTop="@dimen/fragment_grill_settings_button_margin"
-        android:background="@drawable/bg_rounded_rectangle_150_white"
+        android:background="@drawable/bg_rounded_rectangle_50_white"
         android:gravity="center"
         android:text="굽기"
         android:textColor="@color/heavy_pink"
-        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size" />
-</FrameLayout>
+        android:textSize="@dimen/fragment_grill_settings_ok_button_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fragment_grill_settings_grill_button"
+        app:layout_constraintTop_toBottomOf="@id/fragment_grill_settings_meat_image" />
+</androidx.constraintlayout.widget.ConstraintLayout>
