@@ -53,8 +53,8 @@
     <dimen name="layout_grill_settings_width_sign_height">40dp</dimen>
     <dimen name="layout_grill_settings_width_sign_margin_top">60dp</dimen>
     <dimen name="layout_grill_settings_width_sign_text_size">30dp</dimen>
-    <dimen name="layout_grill_settings_width_ruler_width">105dp</dimen>
-    <dimen name="layout_grill_settings_width_ruler_height">300dp</dimen>
+    <dimen name="layout_grill_settings_width_ruler_width">102dp</dimen>
+    <dimen name="layout_grill_settings_width_ruler_height">318dp</dimen>
     <dimen name="layout_grill_settings_width_ruler_margin_top">15dp</dimen>
     <dimen name="layout_grill_settings_width_ruler_margin_end">35dp</dimen>
 

@@ -20,18 +20,18 @@ class WidthLayoutController(
 ) : LayoutControllable(context, grillSettingsDataController, okayButtonCallBack) {
 
     companion object {
-        private const val FIRST_SIGN_VALUE = 0.5f
+        private const val MINIMUM_SIGN_VALUE = 0.5f
         private const val MM_TO_CM = 10.0f
-        private const val SIGN_HALF_HEIGHT = 65.0f
-        private const val Y_FIGURE_PER_MM = 17.0f
-        private const val MAX_COUNT = 9
-        private const val FIRST_MARKING_Y = 95.0f
-        private const val LAST_MARKING_Y = FIRST_MARKING_Y + (Y_FIGURE_PER_MM * 5 * (MAX_COUNT - 1))
     }
 
     private lateinit var mWidthLayout: RelativeLayout
     private lateinit var mSign: TextView
     private lateinit var mRuler: ImageView
+
+    private var mFirstMarkingY = 0.0f
+    private var mLastMarkingY = 0.0f
+    private var mFigureYPerMM = 0.0f
+    private var mSignHalfHeight = 0.0f
 
     private var mTouchStartX = 0.0f
     private var mTouchEndX = 0.0f
@@ -52,7 +52,8 @@ class WidthLayoutController(
                 MotionEvent.ACTION_DOWN,
                 MotionEvent.ACTION_MOVE -> {
                     if (e.x in mTouchStartX..mTouchEndX &&
-                        e.y in mTouchStartY..mTouchEndY) {
+                        e.y in mTouchStartY..mTouchEndY
+                    ) {
                         moveSign(e.y)
                     }
                 }
@@ -83,6 +84,11 @@ class WidthLayoutController(
     }
 
     private fun calculateRulerRange() {
+        mSignHalfHeight = mSign.height / 2.0f
+        mFigureYPerMM = (mRuler.bottom - mRuler.top) / 50.0f
+        mFirstMarkingY = mRuler.top.toFloat() + (mFigureYPerMM * 5.0f)
+        mLastMarkingY = mRuler.top + (mFigureYPerMM * 45.0f)
+
         mTouchStartX = mSign.left.toFloat()
         mTouchEndX = mRuler.right.toFloat()
         mTouchStartY = mRuler.top.toFloat()
@@ -90,18 +96,18 @@ class WidthLayoutController(
     }
 
     private fun moveSign(y: Float) {
-        var signY = y - SIGN_HALF_HEIGHT
-
-        if (signY < FIRST_MARKING_Y) {
-            signY = FIRST_MARKING_Y
-        } else if (signY > LAST_MARKING_Y) {
-            signY = LAST_MARKING_Y
+        val signY = if (y < mFirstMarkingY) {
+            mFirstMarkingY
+        } else if (y > mLastMarkingY) {
+            mLastMarkingY
+        } else {
+            y
         }
 
-        mSignValue = FIRST_SIGN_VALUE + (((signY - FIRST_MARKING_Y) / Y_FIGURE_PER_MM) / MM_TO_CM)
+        mSignValue = MINIMUM_SIGN_VALUE + (((signY - mFirstMarkingY) / mFigureYPerMM) / MM_TO_CM)
         mSignValue = (mSignValue * 10).roundToInt() / 10.0f
 
-        mSign.y = signY
+        mSign.y = signY - mSignHalfHeight
         mSign.text = mContext.resources.getString(R.string.layout_grill_settings_width_ruler_text, mSignValue)
     }
 }
