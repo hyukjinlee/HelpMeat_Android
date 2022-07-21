@@ -21,4 +21,5 @@
 
     <string name="layout_grill_settings_width_ruler_initial_text">1.0cm</string>
     <string name="layout_grill_settings_width_ruler_text">%1$.1fcm</string>
+    <string name="layout_grill_settings_width_help_text">화살표를\n위아래로\n이동!</string>
 </resources>

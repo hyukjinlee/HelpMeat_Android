@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.project.helpmeat.R
 import com.project.helpmeat.utils.AnimationUtils
 import com.project.helpmeat.view.OkayButtonCallBack
@@ -24,9 +26,10 @@ class WidthLayoutController(
         private const val MM_TO_CM = 10.0f
     }
 
-    private lateinit var mWidthLayout: RelativeLayout
+    private lateinit var mWidthLayout: FrameLayout
     private lateinit var mSign: TextView
     private lateinit var mRuler: ImageView
+    private lateinit var mHelpContentsContainer: LinearLayout
 
     private var mFirstMarkingY = 0.0f
     private var mLastMarkingY = 0.0f
@@ -62,6 +65,7 @@ class WidthLayoutController(
         }
         mSign = view.findViewById(R.id.layout_grill_settings_width_sign)
         mRuler = view.findViewById(R.id.layout_grill_settings_width_ruler)
+        mHelpContentsContainer = view.findViewById(R.id.layout_grill_settings_width_help_contents_container)
     }
 
     override fun prepare() {
@@ -89,13 +93,17 @@ class WidthLayoutController(
         mFirstMarkingY = mRuler.top.toFloat() + (mFigureYPerMM * 5.0f)
         mLastMarkingY = mRuler.top + (mFigureYPerMM * 45.0f)
 
-        mTouchStartX = mSign.left.toFloat()
-        mTouchEndX = mRuler.right.toFloat()
+        mTouchStartX = mWidthLayout.left.toFloat()
+        mTouchEndX = mWidthLayout.right.toFloat()
         mTouchStartY = mRuler.top.toFloat()
         mTouchEndY = mRuler.bottom.toFloat()
     }
 
     private fun moveSign(y: Float) {
+        if (isHelpContentsShowing()) {
+            removeHelpContents()
+        }
+
         val signY = if (y < mFirstMarkingY) {
             mFirstMarkingY
         } else if (y > mLastMarkingY) {
@@ -109,5 +117,11 @@ class WidthLayoutController(
 
         mSign.y = signY - mSignHalfHeight
         mSign.text = mContext.resources.getString(R.string.layout_grill_settings_width_ruler_text, mSignValue)
+    }
+
+    private fun isHelpContentsShowing() = mHelpContentsContainer.isVisible
+
+    private fun removeHelpContents() {
+        mHelpContentsContainer.visibility = View.GONE
     }
 }
