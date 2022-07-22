@@ -55,8 +55,6 @@
     <dimen name="layout_grill_settings_width_sign_margin_top">60dp</dimen>
     <dimen name="layout_grill_settings_width_sign_text_size">30dp</dimen>
     <dimen name="layout_grill_settings_width_help_text_size">20dp</dimen>
-    <dimen name="layout_grill_settings_width_help_arrow_width">60dp</dimen>
-    <dimen name="layout_grill_settings_width_help_arrow_height">120dp</dimen>
     <dimen name="layout_grill_settings_width_ruler_width">102dp</dimen>
     <dimen name="layout_grill_settings_width_ruler_height">318dp</dimen>
     <dimen name="layout_grill_settings_width_ruler_margin_top">15dp</dimen>

@@ -33,7 +33,7 @@ interface GrillSettingsDataObserver {
 
     fun onWidthSelected(width: Float)
 
-    fun onGrillSelected()
-
     fun onDegreeSelected()
+
+    fun onGrillSelected()
 }

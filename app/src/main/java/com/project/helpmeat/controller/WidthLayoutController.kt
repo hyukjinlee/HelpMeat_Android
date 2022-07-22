@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.project.helpmeat.R
@@ -29,7 +28,7 @@ class WidthLayoutController(
     private lateinit var mWidthLayout: FrameLayout
     private lateinit var mSign: TextView
     private lateinit var mRuler: ImageView
-    private lateinit var mHelpContentsContainer: LinearLayout
+    private lateinit var mHelpTextView: TextView
 
     private var mFirstMarkingY = 0.0f
     private var mLastMarkingY = 0.0f
@@ -65,7 +64,7 @@ class WidthLayoutController(
         }
         mSign = view.findViewById(R.id.layout_grill_settings_width_sign)
         mRuler = view.findViewById(R.id.layout_grill_settings_width_ruler)
-        mHelpContentsContainer = view.findViewById(R.id.layout_grill_settings_width_help_contents_container)
+        mHelpTextView = view.findViewById(R.id.layout_grill_settings_width_help_text_view)
     }
 
     override fun prepare() {
@@ -100,8 +99,8 @@ class WidthLayoutController(
     }
 
     private fun moveSign(y: Float) {
-        if (isHelpContentsShowing()) {
-            removeHelpContents()
+        if (isHelpTextShowing()) {
+            removeHelpText()
         }
 
         val signY = if (y < mFirstMarkingY) {
@@ -119,9 +118,9 @@ class WidthLayoutController(
         mSign.text = mContext.resources.getString(R.string.layout_grill_settings_width_ruler_text, mSignValue)
     }
 
-    private fun isHelpContentsShowing() = mHelpContentsContainer.isVisible
+    private fun isHelpTextShowing() = mHelpTextView.isVisible
 
-    private fun removeHelpContents() {
-        mHelpContentsContainer.visibility = View.GONE
+    private fun removeHelpText() {
+        mHelpTextView.visibility = View.GONE
     }
 }

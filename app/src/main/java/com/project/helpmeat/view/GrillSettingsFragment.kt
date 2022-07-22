@@ -34,13 +34,13 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
         },
         WIDTH {
             override fun index() = 1
-            override fun next() = GRILL
-        },
-        GRILL {
-            override fun index() = 2
             override fun next() = DEGREE
         },
         DEGREE {
+            override fun index() = 2
+            override fun next() = GRILL
+        },
+        GRILL {
             override fun index() = 3
             override fun next() = FINISH
         },
@@ -57,8 +57,8 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
         return when (index) {
             Step.MEAT.index() -> Step.MEAT
             Step.WIDTH.index() -> Step.WIDTH
-            Step.GRILL.index() -> Step.GRILL
             Step.DEGREE.index() -> Step.DEGREE
+            Step.GRILL.index() -> Step.GRILL
             Step.FINISH.index() -> Step.FINISH
             else -> null
         }
@@ -118,8 +118,8 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
 
         mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_meat_button))
         mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_width_button))
-        mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_grill_button))
         mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_degree_button))
+        mSettingButtonList.add(view.findViewById(R.id.fragment_grill_settings_grill_button))
 
         for (i in Step.MEAT.index()..Step.DEGREE.index()) {
             mSettingButtonList[i].setOnTouchListener(mOnTouchListener)
@@ -196,11 +196,11 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
             Step.WIDTH -> {
                 ResourceUtils.getWidthSettingDescription(requireContext())
             }
-            Step.GRILL -> {
-                ResourceUtils.getGrillSettingDescription(requireContext())
-            }
             Step.DEGREE -> {
                 ResourceUtils.getDegreeSettingDescription(requireContext())
+            }
+            Step.GRILL -> {
+                ResourceUtils.getGrillSettingDescription(requireContext())
             }
             Step.FINISH -> {
                 ResourceUtils.getFinishDescription(requireContext())
@@ -233,13 +233,13 @@ class GrillSettingsFragment : BaseFragment(), GrillSettingsDataObserver, OkayBut
         onStepCompleted()
     }
 
-    override fun onGrillSelected() {
-        mSettingButtonList[Step.GRILL.index()].text = ""
+    override fun onDegreeSelected() {
+        mSettingButtonList[Step.DEGREE.index()].text = ""
         onStepCompleted()
     }
 
-    override fun onDegreeSelected() {
-        mSettingButtonList[Step.DEGREE.index()].text = ""
+    override fun onGrillSelected() {
+        mSettingButtonList[Step.GRILL.index()].text = ""
         onStepCompleted()
     }
 
